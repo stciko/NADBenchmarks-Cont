@@ -8,7 +8,7 @@ def index():
     ### read all the documents and return them in json format
     return jsonify(Dataset.objects().all())
 
-@app.route('/<name_slug>', '/<name_slug>/', methods=['GET'])
+@app.route('/<name_slug>', methods=['GET'])
 def get_dataset(name_slug):
     ### read a document and return it in json format
     return jsonify(Dataset.objects(slug=name_slug))
@@ -54,7 +54,7 @@ def submit_dataset():
     
 
 
-@app.route('/login/', methods=('GET', 'POST'))
+@app.route('/login', methods=('GET', 'POST'))
 def login():
     if current_user.is_authenticated:
         return redirect(url_for('login'))
