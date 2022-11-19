@@ -98,7 +98,7 @@ class MyModelView(ModelView):
         return current_user.is_authenticated
     def _handle_view(self, name, **kwargs):
         if not self.is_accessible():
-            return redirect(url_for('login', next=request.url))
+            return redirect(url_for('login'))
 
 
 
