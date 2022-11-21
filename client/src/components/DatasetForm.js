@@ -14,7 +14,7 @@ import {
 import React, { useState } from 'react';
 import dataReportImg from '../img/dataReport.png';
 
-const GeneralForm = () => {
+const DatasetForm = () => {
   const [input, setInput] = useState('');
   const handleInputChange = e => setInput(e.target.value);
 
@@ -69,4 +69,4 @@ const GeneralForm = () => {
   );
 };
 
-export default GeneralForm;
+export default DatasetForm;

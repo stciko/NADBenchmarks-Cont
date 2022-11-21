@@ -4,7 +4,7 @@ import dataReportImg from '../img/dataReport.png'
 
 const About = () => {
   return (
-    <Box w="90%" mt="100px">
+    <Box w="90%" mt="80px">
       <Text fontSize="3xl" mt="30px" ml="500px" color="#7AAC35" as="b">
         A climate change benchmark database
       </Text>

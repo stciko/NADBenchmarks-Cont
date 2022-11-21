@@ -1,20 +1,46 @@
 import React from 'react';
-import { Breadcrumb, BreadcrumbItem } from '@chakra-ui/react';
-import { Link } from 'react-router-dom';
+import { Breadcrumb, BreadcrumbItem, Button } from '@chakra-ui/react';
+import { Link, useLocation } from 'react-router-dom';
 
 const Navbar = () => {
+  const location = useLocation();
+
   return (
-    <Breadcrumb>
+    <Breadcrumb separator="">
       <BreadcrumbItem isCurrentPage>
-        <Link to="/">Home</Link>
+        {location.pathname === '/' ? (
+          <Button borderRadius="10px" bg="#7AAC35" _hover={{ bg: '#7AAC35' }}>
+            <Link to="/">Home</Link>
+          </Button>
+        ) : (
+          <Button borderRadius="10px" bg="#FFFFFF" _hover={{ bg: '#7AAC35' }}>
+            <Link to="/">Home</Link>
+          </Button>
+        )}
       </BreadcrumbItem>
 
       <BreadcrumbItem>
-        <Link to="/about">About</Link>
+        {location.pathname === '/about' ? (
+          <Button borderRadius="10px" bg="#7AAC35" _hover={{ bg: '#7AAC35' }}>
+            <Link to="/about">About</Link>
+          </Button>
+        ) : (
+          <Button borderRadius="10px" bg="#FFFFFF" _hover={{ bg: '#7AAC35' }}>
+            <Link to="/about">About</Link>
+          </Button>
+        )}
       </BreadcrumbItem>
 
       <BreadcrumbItem>
-        <Link to="/contact">Contact</Link>
+        {location.pathname === '/contact' ? (
+          <Button borderRadius="10px" bg="#7AAC35" _hover={{ bg: '#7AAC35' }}>
+            <Link to="/contact">Contact</Link>
+          </Button>
+        ) : (
+          <Button borderRadius="10px" bg="#FFFFFF" _hover={{ bg: '#7AAC35' }}>
+            <Link to="/contact">Contact</Link>
+          </Button>
+        )}
       </BreadcrumbItem>
     </Breadcrumb>
   );
