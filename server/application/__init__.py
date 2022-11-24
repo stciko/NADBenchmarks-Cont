@@ -1,13 +1,19 @@
 from flask import Flask, render_template, request, redirect, url_for, flash, jsonify
 from application.config import Config
 from flask_mongoengine import MongoEngine
-from flask_admin import Admin
+from flask_admin import Admin, expose
 from flask_admin.contrib.mongoengine import ModelView
 from slugify import slugify
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import login_user, current_user, logout_user, login_required,  LoginManager
-import boto3, botocore
+import boto3
 import datetime
+from flask_admin.helpers import get_form_data
+from flask_admin.babel import gettext
+from flask_admin.form import rules
+from flask_mail import Mail, Message
+from flask_admin.model.helpers import get_mdict_item_or_list
+from markupsafe import Markup
 
 
 try: 
@@ -34,6 +40,9 @@ s3 = boto3.client(
    aws_access_key_id=app.config['S3_KEY'],
    aws_secret_access_key=app.config['S3_SECRET']
 )
+
+print(app.config)
+mail = Mail(app)
 
 ### Dataset Model
 class Dataset(db.Document):
@@ -130,6 +139,7 @@ class MyModelView(ModelView):
     column_filters = ('name', 'topic', 'data_type', 'published','approved')
 
 
+
     def is_accessible(self):
         return current_user.is_authenticated
     def _handle_view(self, name, **kwargs):
@@ -137,12 +147,92 @@ class MyModelView(ModelView):
             return redirect(url_for('login'))
 
 class FeedbackView(MyModelView):
-    column_list = ('timestamp','first_name', 'last_name', 'email', 'subject', 'message', 'response', 'Send Response')
+    can_create = False
+    column_list = ('timestamp','first_name', 'last_name', 'email', 'subject', 'message', 'response', 'Send Reply')
     column_searchable_list = ['first_name', 'last_name', 'email', 'subject', 'message', 'response']
-    column_filters = ['first_name', 'last_name', 'email', 'subject', 'message', 'response', 'timestamp']
-    column_labels = dict(timestamp='Time', first_name='First Name', last_name='Last Name', email='Email', subject='Subject', message='Message', response='Response', Send_Response='Send Response')
+    column_filters = ['first_name', 'last_name', 'email', 'subject', 'message', 'response', 'timestamp', ]
+    column_labels = dict(timestamp='Time', first_name='First Name', last_name='Last Name', email='Email', subject='Subject', message='Message', response='Response' )
 
 
+    form_widget_args = {
+        'timestamp':{
+            'readonly':True
+        },
+        'first_name':{
+            'readonly':True
+        },
+        'last_name':{
+            'readonly':True
+        },
+        'email':{
+            'readonly':True
+        },
+        'subject':{
+            'readonly':True
+        },
+        'message':{
+            'readonly':True
+        },
+
+
+    }
+
+    form_edit_rules =(
+        rules.Field('timestamp'),
+        rules.Field('first_name'),
+        rules.Field('last_name'),
+        rules.Field('email'),
+        rules.Field('subject'),
+        rules.Field('message'),
+        rules.Field('response'),
+    )
+
+    def on_form_prefill(self, form, id):
+        form.response.render_kw = {'readonly': True} if Feedback.objects(id=id).first().replied else {}
+    
+    def _format_send_response(view, context, model, name):
+        if model.replied:
+            return 'Replied'
+
+        reply_url = url_for('.reply')
+        _html = '''
+            <form action="{reply_url}" method="POST">
+                <input id="feeddack_id" name="feeddack_id"  type="hidden" value="{feeddack_id}">
+                <input id="response" name="response"  type="hidden" value="{feeddack_response}">
+                <button type='submit'>Send</button>
+            </form
+        '''.format(reply_url=reply_url, feeddack_id=model.id, feeddack_response=model.response)
+        return Markup(_html)
+
+
+    column_formatters = {
+        'Send Reply': _format_send_response
+    }
+
+
+    @expose('reply', methods=['POST'])
+    def reply(self):
+        form = get_form_data()
+        if not form:
+            flash(gettext('Could not get form from request.'), 'error')
+            return redirect('/admin/feedback')
+        model = self.get_one(form['feeddack_id'])
+        if not model:
+            flash(gettext('Dataset does not exist.'), 'error')
+            return redirect('/admin/feedback')
+        response = form['response']
+        if not response:
+            flash(gettext('Response is required.'), 'error')
+        else:
+            msg = Message(f'Re: {model.subject}', sender = app.config['MAIL_USERNAME'], recipients = [model.email])
+            msg.body = response
+            mail.send(msg)
+            model.replied = True
+            model.save()
+            flash(gettext('Response sent.'), 'success')
+        return redirect('/admin/feedback')
+
+    
 
 
 init_login()

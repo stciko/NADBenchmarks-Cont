@@ -16,6 +16,16 @@ class Config(object):
     S3_SECRET                 = os.environ.get("S3_SECRET_ACCESS_KEY")
     S3_LOCATION               = 'http://{}.s3.amazonaws.com/'.format(S3_BUCKET)
 
+    
+    MAIL_SERVER=os.environ.get("MAIL_SERVER")
+    MAIL_PORT=int(os.environ.get("MAIL_PORT"))
+    MAIL_USE_TLS=False
+    MAIL_USE_SSL=True
+    MAIL_USERNAME=os.environ.get("MAIL_USERNAME")
+    MAIL_PASSWORD=os.environ.get("MAIL_PASSWORD")
+    
+
+
 
 
 
