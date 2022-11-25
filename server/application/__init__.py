@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for, flash, jsonify
 from application.config import Config
 from flask_mongoengine import MongoEngine
-from flask_admin import Admin, expose
+from flask_admin import Admin, expose, AdminIndexView
 from flask_admin.contrib.mongoengine import ModelView
 from slugify import slugify
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -13,6 +13,7 @@ from flask_admin.babel import gettext
 from flask_admin.form import rules
 from flask_mail import Mail, Message
 from flask_admin.model.helpers import get_mdict_item_or_list
+from flask_admin.menu import MenuLink
 from markupsafe import Markup
 
 
@@ -92,7 +93,7 @@ class Feedback(db.Document):
 
 # Admin
 class User(db.Document):
-    username = db.StringField(required=True, unique=True)
+    username = db.StringField(primary_key=True)
     password = db.StringField()
 
     def set_password(self, password):
@@ -100,6 +101,10 @@ class User(db.Document):
 
     def get_password(self, password):
         return check_password_hash(self.password, password)
+
+    def save(self, *args, **kwargs):
+        self.set_password(self.password)
+        super(User, self).save(*args, **kwargs)
 
     # Flask-Login integration
     def is_authenticated(self):
@@ -112,11 +117,11 @@ class User(db.Document):
         return False
 
     def get_id(self):
-        return str(self.id)
+        return self.id
 
     # Required for administrative interface
     def __unicode__(self):
-        return self.login
+        return self.id
 
 
 
@@ -128,8 +133,10 @@ def init_login():
 
     # Create user loader function
     @login_manager.user_loader
-    def load_user(user_id):
-        return User.objects(id=user_id).first()
+    def load_user(username):
+        user=User.objects(username=username).first()
+        print(user)
+        return user
 
 
 # Create customized model view class
@@ -142,9 +149,12 @@ class MyModelView(ModelView):
 
     def is_accessible(self):
         return current_user.is_authenticated
-    def _handle_view(self, name, **kwargs):
-        if not self.is_accessible():
-            return redirect(url_for('login'))
+    # def _handle_view(self, name, **kwargs):
+    #     if not self.is_accessible():
+    #         return redirect(url_for('login'))
+    def inaccessible_callback(self, name, **kwargs):
+        # redirect to login page if user doesn't have access
+        return redirect(url_for('login'))
 
 class FeedbackView(MyModelView):
     can_create = False
@@ -232,6 +242,27 @@ class FeedbackView(MyModelView):
             flash(gettext('Response sent.'), 'success')
         return redirect('/admin/feedback')
 
+    def is_accessible(self):
+        return current_user.is_authenticated
+    # def _handle_view(self, name, **kwargs):
+    #     if not self.is_accessible():
+    #         return redirect(url_for('login'))
+    def inaccessible_callback(self, name, **kwargs):
+        # redirect to login page if user doesn't have access
+        return redirect(url_for('login'))
+
+
+class LoginMenuLink(MenuLink):
+
+    def is_accessible(self):
+        return not current_user.is_authenticated 
+
+
+class LogoutMenuLink(MenuLink):
+
+    def is_accessible(self):
+        return current_user.is_authenticated             
+
     
 
 
@@ -239,6 +270,8 @@ init_login()
 admin = Admin(app, name='NADBenchmarks', template_mode="bootstrap3")
 admin.add_view(MyModelView(Dataset))
 admin.add_view(FeedbackView(Feedback))
+admin.add_link(LogoutMenuLink(name='Logout', category='', url='/admin/logout'))
+admin.add_link(LoginMenuLink(name='Login', category='', url='/admin/login'))   
 
 from application import routes
 

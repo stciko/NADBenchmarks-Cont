@@ -1,5 +1,5 @@
 from application import Dataset, app, User, s3
-from flask import Flask, render_template, request, redirect, url_for, flash, jsonify, Response
+from flask import Flask, render_template, request, redirect, url_for, flash, jsonify, Response, session
 from application.forms import LoginForm
 from flask_login import login_user, current_user, logout_user, login_required
 from werkzeug.utils import secure_filename
@@ -9,6 +9,8 @@ from mongoengine.queryset.visitor import Q
 def index():
     # home page
     # return all accepted datasets 
+    # user=User(username='admin', password='nadbenchmarks2412')
+    # user.save()
     return jsonify(Dataset.objects(approved=True))
 
 
@@ -78,37 +80,31 @@ def get_dataset(name_slug):
 
 
 
-    
-
-
-
-
-
-    
-
-
-@app.route('/login', methods=('GET', 'POST'))
+@app.route('/admin/login', methods=['GET', 'POST'])
 def login():
     if current_user.is_authenticated:
-        return redirect(url_for('login'))
+        return redirect('/admin')
     form = LoginForm()
     if form.validate_on_submit():
         username=form.username.data
         password=form.password.data
-        user=User.objects(username=username).first()
-
+        user=User.objects.get(pk=username)
+        print(user)
         if user:
             if user and user.get_password(password):
-                login_user(user, remember=True)
-                return redirect("/admin/")
+                login_user(user)
+                next = request.args.get('next')
+                return redirect(next or '/admin')
             else:
                 flash('Login Unsuccessful. Please check username and password.','danger')
-    # if request.method == 'POST' and form.validate():
-    #     user = form.get_user()
-    #     login_user(user, remember=form.remember.data)
-    #     return redirect("/admin/")
 
     return render_template('login.html', form=form)
+
+
+@app.route('/admin/logout')
+def logout():
+    logout_user()
+    return redirect('/admin/')
 
 
 
