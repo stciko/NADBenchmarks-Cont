@@ -12,9 +12,9 @@ from flask_admin.helpers import get_form_data
 from flask_admin.babel import gettext
 from flask_admin.form import rules
 from flask_mail import Mail, Message
-from flask_admin.model.helpers import get_mdict_item_or_list
 from flask_admin.menu import MenuLink
 from markupsafe import Markup
+from flask_cors import CORS
 
 
 try: 
@@ -44,6 +44,7 @@ s3 = boto3.client(
 
 print(app.config)
 mail = Mail(app)
+cors=CORS(app)
 
 ### Dataset Model
 class Dataset(db.Document):

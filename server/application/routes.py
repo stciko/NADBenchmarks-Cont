@@ -4,8 +4,10 @@ from application.forms import LoginForm
 from flask_login import login_user, current_user, logout_user, login_required
 from werkzeug.utils import secure_filename
 from mongoengine.queryset.visitor import Q
+from flask_cors import cross_origin
 
 @app.route('/', methods=['GET'])
+@cross_origin()
 def index():
     # home page
     # return all accepted datasets 
@@ -15,6 +17,7 @@ def index():
 
 
 @app.route('/<name_slug>', methods=['GET'])
+@cross_origin()
 def get_dataset(name_slug):
     # specific dataset page
     # get the dataset object by name_slug and get all the similar datasets by topic and task_type
@@ -81,6 +84,7 @@ def get_dataset(name_slug):
 
 
 @app.route('/admin/login', methods=['GET', 'POST'])
+@cross_origin()
 def login():
     if current_user.is_authenticated:
         return redirect('/admin')
