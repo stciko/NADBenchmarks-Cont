@@ -1,80 +1,62 @@
-# This file may be used to create an environment using:
-# $ conda create --name <env> --file <this file>
-# platform: osx-64
-aniso8601=9.0.1=pypi_0
-attrs=22.1.0=pypi_0
-awesome-slugify=1.6.5=pypi_0
-babel=2.10.3=pypi_0
-blinker=1.5=pypi_0
-boto3=1.26.13=pypi_0
-botocore=1.29.13=pypi_0
-ca-certificates=2022.07.19=hecd8cb5_0
-cachelib=0.9.0=pypi_0
-certifi=2022.6.15=py38hecd8cb5_0
-cffi=1.15.1=py38hc55c11b_0
-click=8.0.4=py38hecd8cb5_0
-cryptography=37.0.1=py38hf6deb26_0
-dataclasses=0.8=pyh6d0b6a4_7
-dnspython=2.2.1=py38hecd8cb5_0
-email-validator=1.2.1=pypi_0
-feedwerk=1.1.0=pypi_0
-flask=2.1.3=py38hecd8cb5_0
-flask-admin=1.6.0=pypi_0
-flask-babelex=0.9.4=pypi_0
-flask-blogging=2.0.0.post2=pypi_0
-flask-caching=2.0.1=pypi_0
-flask-cors=3.0.10=pypi_0
-flask-fileupload=0.5.0=pypi_0
-flask-login=0.6.2=pypi_0
-flask-mail=0.9.1=pypi_0
-flask-mongoengine=1.0.0=pypi_0
-flask-principal=0.4.0=pypi_0
-flask-restplus=0.13.0=pypi_0
-flask-security=3.0.0=pypi_0
-flask-wtf=1.0.1=pypi_0
-greenlet=2.0.1=pypi_0
-gunicorn=20.1.0=pypi_0
-idna=3.3=pyhd3eb1b0_0
-importlib-metadata=4.11.3=py38hecd8cb5_0
-importlib-resources=5.9.0=pypi_0
-itsdangerous=2.0.1=pyhd3eb1b0_0
-jinja2=3.0.3=pyhd3eb1b0_0
-jmespath=1.0.1=pypi_0
-jsonschema=4.14.0=pypi_0
-libcxx=12.0.0=h2f01273_0
-libffi=3.3=hb1e8313_2
-markdown=3.4.1=pypi_0
-markupsafe=2.1.1=py38hca72f7f_0
-mongoengine=0.24.2=pypi_0
-ncurses=6.3=hca72f7f_3
-openssl=1.1.1q=hca72f7f_0
-passlib=1.7.4=pypi_0
-pip=22.1.2=py38hecd8cb5_0
-pkgutil-resolve-name=1.3.10=pypi_0
-pycparser=2.21=pyhd3eb1b0_0
-pymongo=3.12.0=py38h23ab428_0
-pyrsistent=0.18.1=pypi_0
-python=3.8.13=hdfd78df_0
-python-dateutil=2.8.2=pypi_0
-python-dotenv=0.20.0=pypi_0
-python-slugify=7.0.0=pypi_0
-pytz=2022.2.1=pypi_0
-readline=8.1.2=hca72f7f_1
-regex=2022.10.31=pypi_0
-s3transfer=0.6.0=pypi_0
-setuptools=61.2.0=py38hecd8cb5_0
-shortuuid=1.0.11=pypi_0
-six=1.16.0=pypi_0
-speaklater=1.3=pypi_0
-sqlalchemy=1.4.44=pypi_0
-sqlite=3.38.2=h707629a_0
-text-unidecode=1.3=pypi_0
-tk=8.6.11=h7bc2e8c_0
-unidecode=0.04.21=pypi_0
-urllib3=1.26.12=pypi_0
-werkzeug=2.0.3=pyhd3eb1b0_0
-wheel=0.37.1=pyhd3eb1b0_0
-wtforms=3.0.1=pypi_0
-xz=5.2.5=hca72f7f_1
-zipp=3.8.0=py38hecd8cb5_0
-zlib=1.2.11=0
+aniso8601==9.0.1
+attrs==22.1.0
+awesome-slugify==1.6.5
+Babel==2.10.3
+blinker==1.5
+boto3==1.26.13
+botocore==1.29.13
+cachelib==0.9.0
+certifi @ file:///private/var/folders/sy/f16zz6x50xz3113nwtb9bvq00000gp/T/abs_83242e7e-f82d-4a71-8ef2-9d71d212d249gu_wxmeq/croots/recipe/certifi_1655968827803/work/certifi
+cffi @ file:///private/var/folders/sy/f16zz6x50xz3113nwtb9bvq00000gp/T/abs_62rp5d8fd4/croots/recipe/cffi_1659598655556/work
+click @ file:///opt/concourse/worker/volumes/live/709f530a-8ffd-4e02-4f5f-9b3cfddd0e0b/volume/click_1646056616410/work
+cryptography @ file:///private/var/folders/sy/f16zz6x50xz3113nwtb9bvq00000gp/T/abs_b470f7cb-c8f1-42c9-b84f-23789ea77e7c9difcqh4/croots/recipe/cryptography_1652101134392/work
+dnspython @ file:///private/var/folders/sy/f16zz6x50xz3113nwtb9bvq00000gp/T/abs_6ecjb_0rcu/croots/recipe/dnspython_1659712640473/work
+email-validator==1.2.1
+feedwerk==1.1.0
+Flask @ file:///private/var/folders/sy/f16zz6x50xz3113nwtb9bvq00000gp/T/abs_8am4k38yjk/croots/recipe/flask_1658870771936/work
+Flask-Admin==1.6.0
+Flask-BabelEx==0.9.4
+Flask-Blogging==2.0.0.post2
+Flask-Caching==2.0.1
+Flask-Cors==3.0.10
+Flask-FileUpload==0.5.0
+Flask-Login==0.6.2
+Flask-Mail==0.9.1
+flask-mongoengine==1.0.0
+Flask-Principal==0.4.0
+flask-restplus==0.13.0
+Flask-Security==3.0.0
+Flask-WTF==1.0.1
+greenlet==2.0.1
+gunicorn==20.1.0
+idna @ file:///tmp/build/80754af9/idna_1637925883363/work
+importlib-metadata @ file:///opt/concourse/worker/volumes/live/9f82d2cd-acb0-490f-6640-deddcdde7174/volume/importlib-metadata_1648562428986/work
+importlib-resources==5.9.0
+itsdangerous @ file:///tmp/build/80754af9/itsdangerous_1621432558163/work
+Jinja2 @ file:///opt/conda/conda-bld/jinja2_1647436528585/work
+jmespath==1.0.1
+jsonschema==4.14.0
+Markdown==3.4.1
+MarkupSafe @ file:///private/var/folders/sy/f16zz6x50xz3113nwtb9bvq00000gp/T/abs_d4a9444f-bd4c-4043-b47d-cede33979b0fve7bm42r/croots/recipe/markupsafe_1654597878200/work
+mongoengine==0.24.2
+passlib==1.7.4
+pkgutil_resolve_name==1.3.10
+pycparser @ file:///tmp/build/80754af9/pycparser_1636541352034/work
+pymongo==3.12.0
+pyrsistent==0.18.1
+python-dateutil==2.8.2
+python-dotenv==0.20.0
+python-slugify==7.0.0
+pytz==2022.2.1
+regex==2022.10.31
+s3transfer==0.6.0
+shortuuid==1.0.11
+six==1.16.0
+speaklater==1.3
+SQLAlchemy==1.4.44
+text-unidecode==1.3
+Unidecode==0.4.21
+urllib3==1.26.12
+Werkzeug==2.0.3
+WTForms==3.0.1
+zipp @ file:///private/var/folders/sy/f16zz6x50xz3113nwtb9bvq00000gp/T/abs_b279673d-f037-44c7-8773-c5a6b6f51037d3wfr9cq/croots/recipe/zipp_1652341773612/work
