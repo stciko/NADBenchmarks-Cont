@@ -10,3 +10,22 @@ class Config(object):
         'db': 'NADdatasets',
         'host': os.environ.get('MONGODB_URI')
     }
+
+    S3_BUCKET                 = os.environ.get("S3_BUCKET_NAME")
+    S3_KEY                    = os.environ.get("S3_ACCESS_KEY")
+    S3_SECRET                 = os.environ.get("S3_SECRET_ACCESS_KEY")
+    S3_LOCATION               = 'http://{}.s3.amazonaws.com/'.format(S3_BUCKET)
+
+    
+    MAIL_SERVER=os.environ.get("MAIL_SERVER")
+    MAIL_PORT=int(os.environ.get("MAIL_PORT"))
+    MAIL_USE_TLS=False
+    MAIL_USE_SSL=True
+    MAIL_USERNAME=os.environ.get("MAIL_USERNAME")
+    MAIL_PASSWORD=os.environ.get("MAIL_PASSWORD")
+    
+
+
+
+
+

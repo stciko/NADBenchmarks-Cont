@@ -1,11 +1,20 @@
 from flask import Flask, render_template, request, redirect, url_for, flash, jsonify
 from application.config import Config
 from flask_mongoengine import MongoEngine
-from flask_admin import Admin
+from flask_admin import Admin, expose, AdminIndexView
 from flask_admin.contrib.mongoengine import ModelView
 from slugify import slugify
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import login_user, current_user, logout_user, login_required,  LoginManager
+import boto3
+import datetime
+from flask_admin.helpers import get_form_data
+from flask_admin.babel import gettext
+from flask_admin.form import rules
+from flask_mail import Mail, Message
+from flask_admin.model.helpers import get_mdict_item_or_list
+from flask_admin.menu import MenuLink
+from markupsafe import Markup
 
 
 try: 
@@ -27,32 +36,64 @@ db=MongoEngine()
 db.init_app(app)
 # api.init_app(app)
 
+s3 = boto3.client(
+   "s3",
+   aws_access_key_id=app.config['S3_KEY'],
+   aws_secret_access_key=app.config['S3_SECRET']
+)
+
+print(app.config)
+mail = Mail(app)
+
 ### Dataset Model
 class Dataset(db.Document):
     name = db.StringField(required=True, unique=True)  # name of the dataset
     slug = db.StringField( unique=True)  # slug field for url generation
+    data_type = db.StringField(required=True)  # type of data  e.g. image, text, audio, video, numerical, etc.
+    phases = db.StringField(required=True) # phases of the dataset  e.g. prevention, response, recovery, etc.
     description = db.StringField(required=True)  # description of the dataset
-    image_url = db.StringField(required=True)  # image url for the dataset
+    image_url = db.StringField()  # image url for the dataset
     data_source = db.StringField(required=True)   # data source of the dataset
     size= db.StringField(required=True)      # size of the dataset
     timespan= db.StringField(required=True)   # timespan of the dataset
     geo_coverage= db.StringField(required=True)   # geographical coverage
     published= db.StringField(required=True)   # published date
     task_type = db.ListField(db.StringField()) # ML task type (regression, classification, segmentation, detection, etc.)
-    topics = db.ListField(db.StringField())   # topics (natrual disaster, climate change, etc.)
-    data_type= db.StringField(required=True)   # data type (image, text, etc.)
+    topic = db.StringField(required=True)  # topic (natrual disaster, climate change, etc.)
+    evaluated_on = db.ListField(db.StringField())  # evaluated on (e.g. COCO, VOC, etc.)
+    metrics = db.ListField(db.StringField())  # metrics (e.g. accuracy, precision, recall, etc.)
+    results = db.StringField(required=True) # MAE, RMSE, etc.
     paper_url = db.StringField(required=True)   # link to the source paper
+    dataset_url = db.StringField()  # link to the dataset
     reference = db.StringField(required=True)   # reference
-    # download instruction? download link? a link to the dataset page? 
+    approved = db.BooleanField(default=False)  # approval status
     
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.name)
         super(Dataset, self).save(*args, **kwargs)
 
+
+# Feedback Model
+class Feedback(db.Document):
+    first_name = db.StringField(required=True)  
+    last_name = db.StringField() 
+    email = db.StringField(required=True)  # email of the user
+    subject = db.StringField()  # subject of the feedback
+    message = db.StringField(required=True)  # message from the user
+    timestamp = db.DateTimeField()  # timestamp of the feedback
+    response = db.StringField()  # response from the admin
+    replied = db.BooleanField(default=False)  # status of the feedback (replied or not)
+
+    def save(self, *args, **kwargs):
+        self.timestamp = datetime.datetime.now()
+        super(Feedback, self).save(*args, **kwargs)
+
+
+
 # Admin
 class User(db.Document):
-    username = db.StringField(required=True, unique=True)
+    username = db.StringField(primary_key=True)
     password = db.StringField()
 
     def set_password(self, password):
@@ -60,6 +101,10 @@ class User(db.Document):
 
     def get_password(self, password):
         return check_password_hash(self.password, password)
+
+    def save(self, *args, **kwargs):
+        self.set_password(self.password)
+        super(User, self).save(*args, **kwargs)
 
     # Flask-Login integration
     def is_authenticated(self):
@@ -72,11 +117,11 @@ class User(db.Document):
         return False
 
     def get_id(self):
-        return str(self.id)
+        return self.id
 
     # Required for administrative interface
     def __unicode__(self):
-        return self.login
+        return self.id
 
 
 
@@ -88,23 +133,145 @@ def init_login():
 
     # Create user loader function
     @login_manager.user_loader
-    def load_user(user_id):
-        return User.objects(id=user_id).first()
+    def load_user(username):
+        user=User.objects(username=username).first()
+        print(user)
+        return user
 
 
 # Create customized model view class
 class MyModelView(ModelView):
+    column_exclude_list = ['slug']
+    column_searchable_list = ('name', 'description', 'reference','published')
+    column_filters = ('name', 'topic', 'data_type', 'published','approved')
+
+
+
     def is_accessible(self):
         return current_user.is_authenticated
-    def _handle_view(self, name, **kwargs):
-        if not self.is_accessible():
-            return redirect(url_for('login'))
+    # def _handle_view(self, name, **kwargs):
+    #     if not self.is_accessible():
+    #         return redirect(url_for('login'))
+    def inaccessible_callback(self, name, **kwargs):
+        # redirect to login page if user doesn't have access
+        return redirect(url_for('login'))
 
+class FeedbackView(MyModelView):
+    can_create = False
+    column_list = ('timestamp','first_name', 'last_name', 'email', 'subject', 'message', 'response', 'Send Reply')
+    column_searchable_list = ['first_name', 'last_name', 'email', 'subject', 'message', 'response']
+    column_filters = ['first_name', 'last_name', 'email', 'subject', 'message', 'response', 'timestamp', ]
+    column_labels = dict(timestamp='Time', first_name='First Name', last_name='Last Name', email='Email', subject='Subject', message='Message', response='Response' )
+
+
+    form_widget_args = {
+        'timestamp':{
+            'readonly':True
+        },
+        'first_name':{
+            'readonly':True
+        },
+        'last_name':{
+            'readonly':True
+        },
+        'email':{
+            'readonly':True
+        },
+        'subject':{
+            'readonly':True
+        },
+        'message':{
+            'readonly':True
+        },
+
+
+    }
+
+    form_edit_rules =(
+        rules.Field('timestamp'),
+        rules.Field('first_name'),
+        rules.Field('last_name'),
+        rules.Field('email'),
+        rules.Field('subject'),
+        rules.Field('message'),
+        rules.Field('response'),
+    )
+
+    def on_form_prefill(self, form, id):
+        form.response.render_kw = {'readonly': True} if Feedback.objects(id=id).first().replied else {}
+    
+    def _format_send_response(view, context, model, name):
+        if model.replied:
+            return 'Replied'
+
+        reply_url = url_for('.reply')
+        _html = '''
+            <form action="{reply_url}" method="POST">
+                <input id="feeddack_id" name="feeddack_id"  type="hidden" value="{feeddack_id}">
+                <input id="response" name="response"  type="hidden" value="{feeddack_response}">
+                <button type='submit'>Send</button>
+            </form
+        '''.format(reply_url=reply_url, feeddack_id=model.id, feeddack_response=model.response)
+        return Markup(_html)
+
+
+    column_formatters = {
+        'Send Reply': _format_send_response
+    }
+
+
+    @expose('reply', methods=['POST'])
+    def reply(self):
+        form = get_form_data()
+        if not form:
+            flash(gettext('Could not get form from request.'), 'error')
+            return redirect('/admin/feedback')
+        model = self.get_one(form['feeddack_id'])
+        if not model:
+            flash(gettext('Dataset does not exist.'), 'error')
+            return redirect('/admin/feedback')
+        response = form['response']
+        if not response:
+            flash(gettext('Response is required.'), 'error')
+        else:
+            msg = Message(f'Re: {model.subject}', sender = app.config['MAIL_USERNAME'], recipients = [model.email])
+            msg.body = response
+            mail.send(msg)
+            model.replied = True
+            model.save()
+            flash(gettext('Response sent.'), 'success')
+        return redirect('/admin/feedback')
+
+    def is_accessible(self):
+        return current_user.is_authenticated
+    # def _handle_view(self, name, **kwargs):
+    #     if not self.is_accessible():
+    #         return redirect(url_for('login'))
+    def inaccessible_callback(self, name, **kwargs):
+        # redirect to login page if user doesn't have access
+        return redirect(url_for('login'))
+
+
+class LoginMenuLink(MenuLink):
+
+    def is_accessible(self):
+        return not current_user.is_authenticated 
+
+
+class LogoutMenuLink(MenuLink):
+
+    def is_accessible(self):
+        return current_user.is_authenticated             
+
+    
 
 
 init_login()
-admin = Admin(app, name='NADBenchmarks')
+admin = Admin(app, name='NADBenchmarks', template_mode="bootstrap3")
 admin.add_view(MyModelView(Dataset))
+admin.add_view(FeedbackView(Feedback))
+admin.add_link(LogoutMenuLink(name='Logout', category='', url='/admin/logout'))
+admin.add_link(LoginMenuLink(name='Login', category='', url='/admin/login'))   
 
 from application import routes
 
