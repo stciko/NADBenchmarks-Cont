@@ -2,6 +2,7 @@ import { Box, Image, Flex, Text, Button } from '@chakra-ui/react';
 import { ArrowBackIcon } from '@chakra-ui/icons';
 import React, { useState } from 'react';
 import GeneralForm from '../components/GeneralForm';
+import DatasetForm from '../components/DatasetForm';
 import uploadImg from '../img/upload.png';
 import mailImg from '../img/mail.png';
 
@@ -91,6 +92,7 @@ const Contact = () => {
           </Box>
         </Flex>
       )}
+      {buttonState === 'submitData' && <DatasetForm />}
       {buttonState === 'email' && <GeneralForm />}
     </Box>
   );

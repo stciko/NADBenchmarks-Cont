@@ -1,14 +1,8 @@
-import React from 'react';
-import {
-  Box,
-  Image,
-  Text,
-  Button,
-  Flex,
-  Spacer,
-} from '@chakra-ui/react';
+import React, { useEffect } from 'react';
+import { Box, Image, Text, Button, Flex, Spacer } from '@chakra-ui/react';
 import { Link } from 'react-router-dom';
 import cardImg from '../img/cardImg.png';
+import axios from 'axios';
 
 const DataCard = () => {
   const dataSet = {
@@ -21,8 +15,31 @@ const DataCard = () => {
     mlTaskType: 'Multiclass segmentation | binary classification',
   };
 
+  const getData = async () => {
+    try {
+      const res = await axios.get("http://localhost:5000/");
+      console.log(res);
+    } catch (error) {
+      // Handle errors
+      console.log(error)
+    }
+  };
+
+  useEffect(() => {
+    getData();
+  }, []);
+
   return (
-    <Box maxW="xl" borderWidth="1px" borderRadius="lg" overflow="hidden" boxShadow='md' p="30px" mt="50px" ml="30px">
+    <Box
+      maxW="xl"
+      borderWidth="1px"
+      borderRadius="lg"
+      overflow="hidden"
+      boxShadow="md"
+      p="30px"
+      mt="50px"
+      ml="30px"
+    >
       <Flex mb="20px">
         <Image src={cardImg} alt="Fallback Image" w="200px" mr="20px" />
         <Spacer />

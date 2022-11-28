@@ -3,10 +3,11 @@ import React, { StrictMode } from 'react';
 import * as ReactDOM from 'react-dom/client';
 import Home from './pages/Home';
 import About from './pages/About';
-import Contact from './pages/Contact';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import DatasetDetail from './pages/DatasetDetail';
 import DatasetList from './pages/DatasetList';
+import DatasetForm from './components/DatasetForm';
+import GeneralForm from './components/GeneralForm';
 
 const router = createBrowserRouter([
   {
@@ -22,8 +23,12 @@ const router = createBrowserRouter([
         element: <About />,
       },
       {
+        path: 'submitDataset',
+        element: <DatasetForm />,
+      },
+      {
         path: 'contact',
-        element: <Contact />,
+        element: <GeneralForm />,
       },
       {
         path: 'detail/:datasetId',
