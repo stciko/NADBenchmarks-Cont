@@ -14,6 +14,7 @@ def index():
     # user=User(username='admin', password='nadbenchmarks2412')
     # user.save()
     return jsonify(Dataset.objects(approved=True))
+    # return render_template('test_s3.html')
 
 
 @app.route('/<name_slug>', methods=['GET'])
@@ -42,11 +43,11 @@ def get_dataset(name_slug):
 
 # @app.route('/upload',methods=['POST'])
 # def tests3():
-#     obj=Dataset.objects.get(slug='creating-xbd-a-dataset-for-assessing-building-damage-from-satellite-imagery')
+#     obj=Dataset.objects.get(slug='vidi-a-video-dataset-of-incidents')
 #     if request.method == "POST":
 #         file = request.files['file']
-#         # file.filename = secure_filename(obj.name + '.' + file.filename.split('.')[-1])
-#         file.filename = secure_filename('numerical' + '.' + file.filename.split('.')[-1])
+#         file.filename = secure_filename(obj.name + '.' + file.filename.split('.')[-1])
+#         # file.filename = secure_filename('numerical' + '.' + file.filename.split('.')[-1])
 #         output = upload_file_to_s3(file, 'cover_img/', app.config["S3_BUCKET"])
 #         return redirect("/")
     
