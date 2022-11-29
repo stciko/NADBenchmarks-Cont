@@ -1,4 +1,4 @@
-from application import Dataset, app, User, s3
+from application import Dataset, app, User, s3, Feedback
 from flask import Flask, render_template, request, redirect, url_for, flash, jsonify, Response, session
 from application.forms import LoginForm
 from flask_login import login_user, current_user, logout_user, login_required
@@ -39,6 +39,24 @@ def get_dataset(name_slug):
             'found':False
         }
     return jsonify(context)
+
+
+
+@app.route('/contact/submit',methods=['POST'])
+@cross_origin()
+def contact_submit():
+    content=request.json
+    if content:
+        name=content['name']
+        email=content['email']
+        message=content['message']
+        subject=content['subject']
+        feedback=Feedback(first_name=name, email=email, message=message, subject=subject)
+        feedback.save()
+        return jsonify({'success':True})
+    else:
+        return jsonify({'success':False})
+
 
 
 # @app.route('/upload',methods=['POST'])

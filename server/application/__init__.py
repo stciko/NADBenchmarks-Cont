@@ -144,7 +144,7 @@ def init_login():
 
 # Create customized model view class
 class MyModelView(ModelView):
-    column_exclude_list = ['slug']
+    column_exclude_list = ['slug','task_type_str']
     column_searchable_list = ('name', 'description', 'reference','published')
     column_filters = ('name', 'topic', 'data_type', 'published','approved')
 
