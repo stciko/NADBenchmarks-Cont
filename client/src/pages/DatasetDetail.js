@@ -54,7 +54,8 @@ const DatasetDetail = () => {
 
   useEffect(() => {
     getSimilarDatasets();
-  }, []);
+    window.scrollTo(0, 0);
+  }, [dataset]);
 
   return (
     <Box ml="300px" maxW="70%" mt="10px">
@@ -150,7 +151,11 @@ const DatasetDetail = () => {
       <Box mt="40px" ml="10vw">
         <JsonViewer value={dataset} />
       </Box>
-      {similarDatasets.length > 0 && <Text fontSize="2xl" ml="-200px" mt="20px" as="b">Similar Datasets</Text>}
+      {similarDatasets.length > 0 && (
+        <Text fontSize="2xl" ml="-200px" mt="20px" as="b">
+          Similar Datasets
+        </Text>
+      )}
       <SimpleGrid columns={2} spacing={10} w="80vw" ml="-200px" mt="-20px">
         {similarDatasets.map((dataset, index) => (
           <Box
@@ -190,7 +195,7 @@ const DatasetDetail = () => {
                 <b>ML Task Type: </b> {dataset.task_type_str}
               </Text>
               <Spacer />
-              <Link to={`detail/${dataset.slug}`} state={dataset}>
+              <Link to={`/detail/${dataset.slug}`} state={dataset}>
                 <Button bg="#7AAC35" color="#FFFFFF" variant="solid" mb="10px">
                   Learn More
                 </Button>
