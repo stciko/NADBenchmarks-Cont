@@ -54,7 +54,6 @@ const GeneralForm = () => {
           message: '',
         });
       }
-      console.log(res.data);
     } catch (error) {
       console.log(error);
       toast({

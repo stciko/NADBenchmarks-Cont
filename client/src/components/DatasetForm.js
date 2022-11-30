@@ -126,7 +126,6 @@ const DatasetForm = () => {
         'http://127.0.0.1:5000/submit/dataset',
         datasetInput
       );
-      console.log(res.data);
       if (res.data['success']) {
         toast({
           title: 'Success',
@@ -158,7 +157,6 @@ const DatasetForm = () => {
           datasetFile: '',
         });
       }
-      console.log(res.data);
     } catch (error) {
       console.log(error);
       toast({
