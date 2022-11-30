@@ -14,7 +14,7 @@ from flask_admin.form import rules
 from flask_mail import Mail, Message
 from flask_admin.menu import MenuLink
 from markupsafe import Markup
-from flask_cors import CORS
+from flask_cors import CORS, cross_origin
 
 
 try: 
@@ -50,28 +50,30 @@ cors=CORS(app)
 class Dataset(db.Document):
     name = db.StringField(required=True, unique=True)  # name of the dataset
     slug = db.StringField( unique=True)  # slug field for url generation
-    data_type = db.StringField(required=True)  # type of data  e.g. image, text, audio, video, numerical, etc.
-    phases = db.StringField(required=True) # phases of the dataset  e.g. prevention, response, recovery, etc.
-    description = db.StringField(required=True)  # description of the dataset
+    data_type = db.StringField()  # type of data  e.g. image, text, audio, video, numerical, etc.
+    phases = db.StringField() # phases of the dataset  e.g. prevention, response, recovery, etc.
+    description = db.StringField()  # description of the dataset
     image_url = db.StringField()  # image url for the dataset
-    data_source = db.StringField(required=True)   # data source of the dataset
-    size= db.StringField(required=True)      # size of the dataset
-    timespan= db.StringField(required=True)   # timespan of the dataset
-    geo_coverage= db.StringField(required=True)   # geographical coverage
-    published= db.StringField(required=True)   # published date
+    data_source = db.StringField()   # data source of the dataset
+    size= db.StringField()      # size of the dataset
+    timespan= db.StringField()   # timespan of the dataset
+    geo_coverage= db.StringField()   # geographical coverage
+    published= db.StringField()   # published date
     task_type = db.ListField(db.StringField()) # ML task type (regression, classification, segmentation, detection, etc.)
-    topic = db.StringField(required=True)  # topic (natrual disaster, climate change, etc.)
+    task_type_str=db.StringField()  # string representation of the task type
+    topic = db.StringField()  # topic (natrual disaster, climate change, etc.)
     evaluated_on = db.ListField(db.StringField())  # evaluated on (e.g. COCO, VOC, etc.)
     metrics = db.ListField(db.StringField())  # metrics (e.g. accuracy, precision, recall, etc.)
-    results = db.StringField(required=True) # MAE, RMSE, etc.
-    paper_url = db.StringField(required=True)   # link to the source paper
+    results = db.StringField() # MAE, RMSE, etc.
+    paper_url = db.StringField()   # link to the source paper
     dataset_url = db.StringField()  # link to the dataset
-    reference = db.StringField(required=True)   # reference
+    reference = db.StringField()   # reference
     approved = db.BooleanField(default=False)  # approval status
     
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.name)
+        self.task_type_str = ' | '.join(self.task_type)
         super(Dataset, self).save(*args, **kwargs)
 
 
@@ -142,7 +144,7 @@ def init_login():
 
 # Create customized model view class
 class MyModelView(ModelView):
-    column_exclude_list = ['slug']
+    column_exclude_list = ['slug','task_type_str']
     column_searchable_list = ('name', 'description', 'reference','published')
     column_filters = ('name', 'topic', 'data_type', 'published','approved')
 
