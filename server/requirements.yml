@@ -29,7 +29,7 @@ dependencies:
   - wheel=0.37.1=pyhd3eb1b0_0
   - xz=5.2.5=hca72f7f_1
   - zipp=3.8.0=py38hecd8cb5_0
-  - zlib=1.2.11=0
+  # - zlib=1.2.11=0
   - pip:
     - aniso8601==9.0.1
     - attrs==22.1.0
@@ -79,4 +79,3 @@ dependencies:
     - urllib3==1.26.12
     - wtforms==3.0.1
 prefix: /Applications/anaconda3/envs/MyFlaskEnv
-

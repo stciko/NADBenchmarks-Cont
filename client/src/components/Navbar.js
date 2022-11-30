@@ -1,20 +1,74 @@
 import React from 'react';
-import { Breadcrumb, BreadcrumbItem } from '@chakra-ui/react';
-import { Link } from 'react-router-dom';
+import { Breadcrumb, BreadcrumbItem, Button } from '@chakra-ui/react';
+import { Link, useLocation } from 'react-router-dom';
 
 const Navbar = () => {
+  let location = useLocation();
+
   return (
-    <Breadcrumb>
+    <Breadcrumb separator="">
       <BreadcrumbItem isCurrentPage>
-        <Link to="/">Home</Link>
+        {location.pathname === '/' ? (
+          <Link to="/">
+            <Button borderRadius="10px" bg="#7AAC35" _hover={{ bg: '#7AAC35' }}>
+              Home
+            </Button>
+          </Link>
+        ) : (
+          <Link to="/">
+            <Button borderRadius="10px" bg="#FFFFFF" _hover={{ bg: '#7AAC35' }}>
+              Home
+            </Button>
+          </Link>
+        )}
       </BreadcrumbItem>
 
       <BreadcrumbItem>
-        <Link to="/about">About</Link>
+        {location.pathname === '/about' ? (
+          <Link to="/about">
+            <Button borderRadius="10px" bg="#7AAC35" _hover={{ bg: '#7AAC35' }}>
+              About
+            </Button>
+          </Link>
+        ) : (
+          <Link to="/about">
+            <Button borderRadius="10px" bg="#FFFFFF" _hover={{ bg: '#7AAC35' }}>
+              About
+            </Button>
+          </Link>
+        )}
       </BreadcrumbItem>
 
       <BreadcrumbItem>
-        <Link to="/contact">Contact</Link>
+        {location.pathname === '/submitDataset' ? (
+          <Link to="/submitDataset">
+            <Button borderRadius="10px" bg="#7AAC35" _hover={{ bg: '#7AAC35' }}>
+              Submit Dataset
+            </Button>
+          </Link>
+        ) : (
+          <Link to="/submitDataset">
+            <Button borderRadius="10px" bg="#FFFFFF" _hover={{ bg: '#7AAC35' }}>
+              Submit Dataset
+            </Button>
+          </Link>
+        )}
+      </BreadcrumbItem>
+
+      <BreadcrumbItem>
+        {location.pathname === '/contact' ? (
+          <Link to="/contact">
+            <Button borderRadius="10px" bg="#7AAC35" _hover={{ bg: '#7AAC35' }}>
+              Contact
+            </Button>
+          </Link>
+        ) : (
+          <Link to="/contact">
+            <Button borderRadius="10px" bg="#FFFFFF" _hover={{ bg: '#7AAC35' }}>
+              Contact
+            </Button>
+          </Link>
+        )}
       </BreadcrumbItem>
     </Breadcrumb>
   );
