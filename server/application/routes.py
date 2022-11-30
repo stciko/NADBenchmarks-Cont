@@ -62,6 +62,7 @@ def submit_dataset():
         dataset_url=content['datasetSource']
         phases=content['phase']
         file=content['datasetFile']
+        file_url=''
         if file:
             file.filename = secure_filename(slugify(name) + '.' + file.filename.split('.')[-1])
             output = upload_file_to_s3(file, 'file/', app.config["S3_BUCKET"])
