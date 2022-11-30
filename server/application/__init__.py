@@ -68,6 +68,7 @@ class Dataset(db.Document):
     paper_url = db.StringField()   # link to the source paper
     dataset_url = db.StringField()  # link to the dataset
     reference = db.StringField()   # reference
+    file_url = db.StringField()  # link to the file
     approved = db.BooleanField(default=False)  # approval status
     
 

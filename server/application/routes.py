@@ -5,6 +5,7 @@ from flask_login import login_user, current_user, logout_user, login_required
 from werkzeug.utils import secure_filename
 from mongoengine.queryset.visitor import Q
 from flask_cors import cross_origin
+from slugify import slugify
 
 @app.route('/', methods=['GET'])
 @cross_origin()
@@ -42,7 +43,37 @@ def get_dataset(name_slug):
 
 
 
-@app.route('/contact/submit',methods=['POST'])
+@app.route('/submit/dataset', methods=['POST'])
+@cross_origin()
+def submit_dataset():
+    content=request.json
+    if content:
+        name=content['datasetName']
+        if Dataset.objects(name=name).first():
+            return jsonify({'success':False, 'error':'Dataset with this name already exists.'})
+        description=content['description']
+        reference=content['citation']
+        topic=content['topic']
+        task_type=content['mlTaskType']
+        data_type=content['datasetType']
+        timespan=content['timespan']
+        geo_coverage=content['coverage']
+        paper_url=content['resourceLink']
+        dataset_url=content['datasetSource']
+        phases=content['phase']
+        file=content['datasetFile']
+        if file:
+            file.filename = secure_filename(slugify(name) + '.' + file.filename.split('.')[-1])
+            output = upload_file_to_s3(file, 'file/', app.config["S3_BUCKET"])
+            file_url = 'https://s3.amazonaws.com/nadbenchmarks/file/' + file.filename
+        dataset=Dataset(name=name, description=description, reference=reference, topic=topic, task_type=task_type, data_type=data_type, timespan=timespan, geo_coverage=geo_coverage, paper_url=paper_url, dataset_url=dataset_url, phases=phases, file_url=file_url)
+        dataset.save()
+        return jsonify({'success':True})
+    return jsonify({'success':False, 'error':'No data found.'})
+
+
+
+@app.route('/submit/contact',methods=['POST'])
 @cross_origin()
 def contact_submit():
     content=request.json
@@ -71,34 +102,7 @@ def contact_submit():
     
 
 
-# @app.route('/submit', methods=['POST','GET'])
-# def submit_dataset():
-#     ### create a new document from the form and save it
-#     name = request.form.get('name')
-#     description = request.form.get('description')
-#     # image TBD
-#     cover_image = request.form.get('cover_image')
-#     data_source = request.form.get('data_source')
-#     size= request.form.get('size')
-#     timespan= request.form.get('timespan')
-#     geo_coverage= request.form.get('geo_coverage')
-#     published= request.form.get('published')
-#     task_type = request.form.get('task_type')
-#     topics = request.form.get('topics')
-#     data_type= request.form.get('data_type')
-#     paper_url = request.form.get('paper_url')
-#     reference = request.form.get('reference')
-#     # download TBD
 
-#     dataset = Dataset(name=name, description=description, image_url=image_url, data_source=data_source, size=size, timespan=timespan, geo_coverage=geo_coverage, published=published, task_type=task_type, topics=topics, data_type=data_type, paper_url=paper_url, reference=reference)
-#     dataset.save()
-
-#     context = {
-#         'staus': 'Success',
-#         'dataset': dataset
-#     }
-
-#     return jsonify(context)
 
 
 
