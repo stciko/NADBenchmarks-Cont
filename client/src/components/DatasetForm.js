@@ -21,6 +21,7 @@ import {
 } from '@chakra-ui/react';
 import React, { useState } from 'react';
 import submitImg from '../img/submit.png';
+import axios from 'axios';
 
 const DatasetForm = () => {
   const [datasetInput, setDatasetInput] = useState({
@@ -113,20 +114,61 @@ const DatasetForm = () => {
     setFile(e.target.files[0]);
   };
 
-  const submitDatasetSucceeded = e => {
+  const submitDatasetSucceeded = async e => {
     e.preventDefault();
     setDatasetInput(prevState => ({
       ...prevState,
       datasetFile: file,
     }));
 
-    toast({
-      title: 'Success',
-      description: 'Dataset has been submitted successfully',
-      status: 'success',
-      duration: 5000,
-      isClosable: true,
-    });
+    try {
+      const res = await axios.post(
+        'http://127.0.0.1:5000/submit/dataset',
+        datasetInput
+      );
+      console.log(res.data);
+      if (res.data['success']) {
+        toast({
+          title: 'Success',
+          description: 'Dataset has been submitted successfully',
+          status: 'success',
+          duration: 5000,
+          isClosable: true,
+        });
+
+        setDatasetInput({
+          name: '',
+          email: '',
+          paperTitle: '',
+          resourceLink: '',
+          datasetName: '',
+          datasetSource: '',
+          benchmarkTask: '',
+          mlTaskType: [],
+          topic: '',
+          description: '',
+          phase: '',
+          timespan: '',
+          coverage: '',
+          datasetType: '',
+          publishYear: '',
+          size: '',
+          citation: '',
+          additionalComments: '',
+          datasetFile: '',
+        });
+      }
+      console.log(res.data);
+    } catch (error) {
+      console.log(error);
+      toast({
+        title: 'Error',
+        description: 'Dataset cannot be submitted',
+        status: 'error',
+        duration: 5000,
+        isClosable: true,
+      });
+    }
   };
 
   return (

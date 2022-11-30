@@ -23,7 +23,6 @@ const DatasetList = () => {
       setDatasetList(res.data);
       initialList = res.data;
     } catch (error) {
-      // Handle errors
       console.log(error);
     }
   };
@@ -103,14 +102,10 @@ const DatasetList = () => {
               {dataset.description}
             </Text>
             <Flex>
-              <Text fontSize="sm" mr="50px" mt="8px">
-                <Flex>
-                  <b>ML Task Type: </b>
-                  {dataset.task_type?.map(type => (
-                    <Text mr="10px"> {type}, </Text>
-                  ))}
-                </Flex>
+              <Text fontSize="sm" mt="8px">
+                <b>ML Task Type:</b> {dataset.task_type_str}
               </Text>
+              <Spacer/>
               <Link to={`detail/${dataset.slug}`} state={dataset}>
                 <Button bg="#7AAC35" color="#FFFFFF" variant="solid" mb="10px">
                   Learn More

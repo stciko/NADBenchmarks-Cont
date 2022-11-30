@@ -1,12 +1,23 @@
-import React from 'react';
-import { useLocation } from 'react-router-dom';
-import { Text, Flex, Box, Image, Button, useToast } from '@chakra-ui/react';
+import React, { useState, useEffect } from 'react';
+import { useLocation, Link } from 'react-router-dom';
+import {
+  Text,
+  Flex,
+  Box,
+  Image,
+  Button,
+  useToast,
+  SimpleGrid,
+  Spacer,
+} from '@chakra-ui/react';
 import { JsonViewer } from '@textea/json-viewer';
+import axios from 'axios';
 
 const DatasetDetail = () => {
   const location = useLocation();
   const dataset = location.state;
   const toast = useToast();
+  const [similarDatasets, setSimilarDatasets] = useState([]);
 
   const displayToast = () => {
     toast({
@@ -24,13 +35,26 @@ const DatasetDetail = () => {
   };
 
   const downloadDataset = () => {
-    const blob = new Blob([JSON.stringify(dataset)])
+    const blob = new Blob([JSON.stringify(dataset)]);
     const url = window.URL.createObjectURL(blob);
     let file = document.createElement('a');
     file.href = url;
     file.download = `${dataset.name}.json`;
     file.click();
   };
+
+  const getSimilarDatasets = async () => {
+    try {
+      const res = await axios.get(`http://127.0.0.1:5000/${dataset.slug}`);
+      setSimilarDatasets(res.data.by_task_type);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    getSimilarDatasets();
+  }, []);
 
   return (
     <Box ml="300px" maxW="70%" mt="10px">
@@ -126,6 +150,55 @@ const DatasetDetail = () => {
       <Box mt="40px" ml="10vw">
         <JsonViewer value={dataset} />
       </Box>
+      {similarDatasets.length > 0 && <Text fontSize="2xl" ml="-200px" mt="20px" as="b">Similar Datasets</Text>}
+      <SimpleGrid columns={2} spacing={10} w="80vw" ml="-200px" mt="-20px">
+        {similarDatasets.map((dataset, index) => (
+          <Box
+            borderWidth="1px"
+            borderRadius="lg"
+            overflow="hidden"
+            boxShadow="md"
+            p="30px"
+            mt="50px"
+            h="420px"
+            key={index}
+          >
+            <Flex mb="20px">
+              <Image
+                src={dataset.image_url}
+                alt="Fallback Image"
+                w="210px"
+                h="200px"
+                mr="20px"
+              />
+              <Spacer />
+              <Box>
+                <Text fontSize="2xl" as="b">
+                  {dataset.name}
+                </Text>
+                <br />
+                <Text fontSize="lg" as="b">
+                  Phases: {dataset.phases}
+                </Text>
+              </Box>
+            </Flex>
+            <Text fontSize="sm" mb="20px">
+              {dataset.description}
+            </Text>
+            <Flex>
+              <Text fontSize="sm" mr="50px" mt="8px">
+                <b>ML Task Type: </b> {dataset.task_type_str}
+              </Text>
+              <Spacer />
+              <Link to={`detail/${dataset.slug}`} state={dataset}>
+                <Button bg="#7AAC35" color="#FFFFFF" variant="solid" mb="10px">
+                  Learn More
+                </Button>
+              </Link>
+            </Flex>
+          </Box>
+        ))}
+      </SimpleGrid>
     </Box>
   );
 };
