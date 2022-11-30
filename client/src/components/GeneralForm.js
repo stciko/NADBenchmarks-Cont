@@ -12,7 +12,7 @@ import {
   Textarea,
 } from '@chakra-ui/react';
 import React, { useState } from 'react';
-import dataReportImg from '../img/dataReport.png';
+import contactImg from '../img/contact.png';
 
 const GeneralForm = () => {
   const [input, setInput] = useState('');
@@ -20,13 +20,13 @@ const GeneralForm = () => {
 
   return (
     <Box w="90%" mt="50px" ml="100px">
-      <Flex mt="30px" w="80%">
+      <Flex mt="30px" w="90%">
         <Image
-          src={dataReportImg}
-          ml="100px"
-          boxSize="500px"
+          src={contactImg}
+          ml="40px"
+          w="600px"
           mb="300px"
-          mt="-100px"
+          mt="10px"
           mr="100px"
         />
 

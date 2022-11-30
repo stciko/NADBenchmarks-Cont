@@ -1,8 +1,24 @@
-import { Box, Text, Image, Button, Flex } from '@chakra-ui/react';
+import { Box, Text, Image, Button, Flex, useToast } from '@chakra-ui/react';
 import React from 'react';
-import dataReportImg from '../img/dataReport.png'
+import dataReportImg from '../img/dataReport.png';
+
+const reference ='Proma, A. M., Islam, M. S., Ciko, S., Baten, R. A., & Hoque, E. (2022). NADBenchmarks-a compilation of Benchmark Datasets for Machine Learning Tasks related to Natural Disasters.';
 
 const About = () => {
+  const toast = useToast();
+
+  const displayToast = () => {
+    toast({
+      title: 'Following reference has been copied.',
+      description: reference,
+      status: 'success',
+      duration: 5000,
+      isClosable: true,
+    });
+    navigator.clipboard.writeText(reference);
+  }
+
+
   return (
     <Box w="90%" mt="80px">
       <Text fontSize="3xl" mt="30px" ml="500px" color="#7AAC35" as="b">
@@ -27,11 +43,24 @@ const About = () => {
             NaD Benchmarks 2 is an extention of Benchmark datasets for Machine
             Learning for Natural Disasters as introduced by Proma et al.
           </Text>
-          <Button bg="#7AAC35" color="#FFFFFF" variant="solid" mt="30px" ml="140px">
-            Copy References
+          <Button
+            bg="#7AAC35"
+            color="#FFFFFF"
+            variant="solid"
+            mt="30px"
+            ml="140px"
+            onClick={displayToast}
+          >
+            Copy Reference
           </Button>
         </Box>
-        <Image src={dataReportImg} ml="100px" boxSize="500px" mb="300px" mt="-100px"/>
+        <Image
+          src={dataReportImg}
+          ml="100px"
+          boxSize="500px"
+          mb="300px"
+          mt="-100px"
+        />
       </Flex>
     </Box>
   );

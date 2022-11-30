@@ -7,7 +7,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import DatasetDetail from './pages/DatasetDetail';
 import DatasetList from './pages/DatasetList';
 import DatasetForm from './components/DatasetForm';
-import GeneralForm from './components/GeneralForm';
+import Contact from './pages/Contact';
 
 const router = createBrowserRouter([
   {
@@ -28,7 +28,7 @@ const router = createBrowserRouter([
       },
       {
         path: 'contact',
-        element: <GeneralForm />,
+        element: <Contact />,
       },
       {
         path: 'detail/:datasetId',
