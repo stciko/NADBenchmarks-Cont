@@ -20,7 +20,6 @@ const DatasetList = () => {
   const getData = async () => {
     try {
       const res = await axios.get('https://nadbenchmarks.herokuapp.com/datasetList');
-      console.log(res)
       setDatasetList(res.data);
       initialList = res.data;
     } catch (error) {
