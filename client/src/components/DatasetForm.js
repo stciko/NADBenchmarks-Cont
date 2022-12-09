@@ -97,15 +97,22 @@ const DatasetForm = () => {
         datasetInput?.datasetName !== '' &&
         datasetInput?.datasetSource !== '' &&
         datasetInput?.benchmarkTask !== ''
-      )
+      ) {
         if (!datasetError) {
           setCurrPage(1);
         }
+      } else {
+        toast({
+          title: 'Error',
+          description: 'Missing some inputs',
+          status: 'error',
+          duration: 3000,
+          isClosable: true,
+        });
+      }
     } else {
       if (e.target.name !== 'submit') {
         setCurrPage(0);
-      } else {
-        // submit form
       }
     }
   };
