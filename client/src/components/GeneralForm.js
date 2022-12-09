@@ -36,7 +36,7 @@ const GeneralForm = () => {
   const submitContact = async () => {
     try {
       const res = await axios.post(
-        'http://127.0.0.1:5000/submit/contact',
+        'https://nadbenchmarks.herokuapp.com/submit/contact',
         contactInput
       );
       if (res.data['success']) {
