@@ -11,11 +11,16 @@ from slugify import slugify
 @cross_origin()
 def index():
     # home page
-    # return all accepted datasets 
+    # return all accepted datasets
     # user=User(username='admin', password='nadbenchmarks2412')
     # user.save()
-    return jsonify(Dataset.objects(approved=True))
+    return render_template('index.html')
     # return render_template('test_s3.html')
+
+@app.route('/datasetList', methods=['GET'])
+@cross_origin()
+def getDatasetList():
+    return jsonify(Dataset.objects(approved=True))
 
 
 @app.route('/<name_slug>', methods=['GET'])
@@ -34,7 +39,7 @@ def get_dataset(name_slug):
             'dataset': obj,
             'by_topic': by_topic,
             'by_task_type': list(by_task_type)
-        } 
+        }
     else:
         context={
             'found':False
@@ -100,7 +105,7 @@ def contact_submit():
 #         # file.filename = secure_filename('numerical' + '.' + file.filename.split('.')[-1])
 #         output = upload_file_to_s3(file, 'cover_img/', app.config["S3_BUCKET"])
 #         return redirect("/")
-    
+
 
 
 

@@ -45,7 +45,7 @@ const DatasetDetail = () => {
 
   const getSimilarDatasets = async () => {
     try {
-      const res = await axios.get(`http://127.0.0.1:5000/${dataset.slug}`);
+      const res = await axios.get(`https://nadbenchmarks.herokuapp.com/${dataset.slug}`);
       setSimilarDatasets(res.data.by_task_type);
     } catch (error) {
       console.log(error);

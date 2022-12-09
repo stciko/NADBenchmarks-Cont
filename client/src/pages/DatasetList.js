@@ -19,7 +19,7 @@ const DatasetList = () => {
 
   const getData = async () => {
     try {
-      const res = await axios.get('http://127.0.0.1:5000/');
+      const res = await axios.get('https://nadbenchmarks.herokuapp.com/datasetList');
       setDatasetList(res.data);
       initialList = res.data;
     } catch (error) {
