@@ -11,11 +11,11 @@ import Contact from './pages/Contact';
 
 const router = createBrowserRouter([
   {
-    path: '/',
+    path: '/datasetList',
     element: <Home />,
     children: [
       {
-        path: '/',
+        path: '/datasetList',
         element: <DatasetList />,
       },
       {
