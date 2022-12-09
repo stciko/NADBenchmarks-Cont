@@ -17,7 +17,7 @@ from markupsafe import Markup
 from flask_cors import CORS, cross_origin
 
 
-try: 
+try:
     from flask_restplus import Api, Resource
 except ImportError:
     import werkzeug, flask.scaffold
@@ -29,7 +29,7 @@ except ImportError:
 
 api=Api()
 
-app=Flask(__name__)
+app=Flask(__name__, static_folder='client/build', static_url_path='')
 app.config.from_object(Config)
 
 db=MongoEngine()
@@ -70,7 +70,7 @@ class Dataset(db.Document):
     reference = db.StringField()   # reference
     file_url = db.StringField()  # link to the file
     approved = db.BooleanField(default=False)  # approval status
-    
+
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.name)
@@ -80,8 +80,8 @@ class Dataset(db.Document):
 
 # Feedback Model
 class Feedback(db.Document):
-    first_name = db.StringField(required=True)  
-    last_name = db.StringField() 
+    first_name = db.StringField(required=True)
+    last_name = db.StringField()
     email = db.StringField(required=True)  # email of the user
     subject = db.StringField()  # subject of the feedback
     message = db.StringField(required=True)  # message from the user
@@ -203,7 +203,7 @@ class FeedbackView(MyModelView):
 
     def on_form_prefill(self, form, id):
         form.response.render_kw = {'readonly': True} if Feedback.objects(id=id).first().replied else {}
-    
+
     def _format_send_response(view, context, model, name):
         if model.replied:
             return 'Replied'
@@ -259,15 +259,15 @@ class FeedbackView(MyModelView):
 class LoginMenuLink(MenuLink):
 
     def is_accessible(self):
-        return not current_user.is_authenticated 
+        return not current_user.is_authenticated
 
 
 class LogoutMenuLink(MenuLink):
 
     def is_accessible(self):
-        return current_user.is_authenticated             
+        return current_user.is_authenticated
 
-    
+
 
 
 init_login()
@@ -275,10 +275,6 @@ admin = Admin(app, name='NADBenchmarks', template_mode="bootstrap3")
 admin.add_view(MyModelView(Dataset))
 admin.add_view(FeedbackView(Feedback))
 admin.add_link(LogoutMenuLink(name='Logout', category='', url='/admin/logout'))
-admin.add_link(LoginMenuLink(name='Login', category='', url='/admin/login'))   
+admin.add_link(LoginMenuLink(name='Login', category='', url='/admin/login'))
 
 from application import routes
-
-
-
-
