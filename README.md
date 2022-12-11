@@ -23,10 +23,8 @@ View our project website: https://sites.google.com/view/nadbenchmarks/home?authu
 - [x] Basic features
 - [x] Have the official website running
 - [x] Make the website more responsive
-- [ ] Improve current form validation
 - [ ] Advanced features
     - [ ] Dataset download (need to organize actual dataset files)
-    - [ ] Dataset viewer
     - [ ] ...
 - [ ] ...
 
