@@ -20,11 +20,11 @@ const About = () => {
 
 
   return (
-    <Box w="90%" mt="80px">
-      <Text fontSize="3xl" mt="30px" ml="500px" color="#7AAC35" as="b">
+    <Box w="90%" mt={{base: '80px', '2xl': "100px"}}>
+      <Text fontSize="3xl" mt="30px" ml={{base: '480px', '2xl': "650px"}} color="#7AAC35" as="b">
         A climate change benchmark database
       </Text>
-      <Flex ml="200px" mt="30px" w="80%">
+      <Flex ml={{base: '200px', '2xl': "300px"}} mt={{base: '80px', '2xl': "100px"}} w="80%">
         <Box textAlign="justify">
           <Text>
             This site facilitates the proccess of searching for natural disaster

@@ -67,7 +67,7 @@ const GeneralForm = () => {
   };
 
   return (
-    <Box w="90%" mt="50px" ml="100px">
+    <Box w="90%" mt={{base: '50px', '2xl': "100px"}} ml={{base: '100px', '2xl': "250px"}}>
       <Flex mt="30px" w="90%">
         <Image
           src={contactImg}
@@ -75,7 +75,7 @@ const GeneralForm = () => {
           w="600px"
           mb="300px"
           mt="10px"
-          mr="100px"
+          mr={{base: '150px', '2xl': "250px"}}
         />
 
         <Box mt="-20px">
