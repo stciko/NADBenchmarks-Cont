@@ -177,7 +177,7 @@ const DatasetForm = () => {
   };
 
   return (
-    <Box w="90%" mt="50px" ml="100px">
+    <Box w="90%" mt={{base: '50px', '2xl': "100px"}} ml={{base: '100px', '2xl': "250px"}}>
       <Flex mt="30px" w="90%">
         <Image
           src={submitImg}
@@ -185,7 +185,7 @@ const DatasetForm = () => {
           boxSize="500px"
           mb="300px"
           mt="90px"
-          mr="150px"
+          mr={{base: '150px', '2xl': "250px"}}
         />
 
         <Box mt="-20px">
@@ -199,9 +199,6 @@ const DatasetForm = () => {
                   onChange={handleForm}
                   name="name"
                 />
-                {/* {!datasetError ? "" : (
-                  <FormErrorMessage>Your name is required.</FormErrorMessage>
-                )} */}
               </FormControl>
               <FormControl isRequired mb="20px">
                 <FormLabel>Email</FormLabel>
@@ -211,9 +208,6 @@ const DatasetForm = () => {
                   onChange={handleForm}
                   name="email"
                 />
-                {/* {!datasetError ? "" : (
-                  <FormErrorMessage>Your email is required.</FormErrorMessage>
-                )} */}
               </FormControl>
               <FormControl isRequired mb="20px">
                 <FormLabel>Resource (Paper) Title</FormLabel>

@@ -58,7 +58,7 @@ const DatasetDetail = () => {
   }, [dataset]);
 
   return (
-    <Box ml="300px" maxW="70%" mt="10px">
+    <Box ml={{base: '300px', '2xl': "500px"}} maxW="70%" mt={{base: '20px', '2xl': "30px"}}>
       <Text fontSize="3xl" as="b">
         {dataset.name}
       </Text>
@@ -109,7 +109,7 @@ const DatasetDetail = () => {
           </Box>
         </Box>
       </Flex>
-      <Flex mt="50px" ml="50px">
+      <Flex mt="50px" ml={{base: '50px', '2xl': "80px"}}>
         <Button
           bg="#7AAC35"
           color="#FFFFFF"
@@ -148,15 +148,15 @@ const DatasetDetail = () => {
           Copy Reference
         </Button>
       </Flex>
-      <Box mt="40px" ml="10vw">
+      <Box mt="40px" ml={{base: '10vw', '2xl': "8vw"}}>
         <JsonViewer value={dataset} />
       </Box>
       {similarDatasets.length > 0 && (
-        <Text fontSize="2xl" ml="-200px" mt="20px" as="b">
+        <Text fontSize="2xl" ml={{base: '-200px', '2xl': "-250px"}} mt="20px" as="b">
           Similar Datasets
         </Text>
       )}
-      <SimpleGrid columns={2} spacing={10} w="80vw" ml="-200px" mt="-20px">
+      <SimpleGrid columns={2} spacing={10} w="80vw" ml={{base: '-200px', '2xl': "-250px"}} mt="-20px">
         {similarDatasets.map((dataset, index) => (
           <Box
             borderWidth="1px"

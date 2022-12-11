@@ -60,7 +60,7 @@ const DatasetList = () => {
         value={searchInput}
         mt="30px"
         w="50vw"
-        ml="350px"
+        ml={{base: '350px', '2xl': "450px"}}
         borderColor="#7AAC35"
         boxShadow="md"
         borderRadius="lg"
@@ -76,7 +76,7 @@ const DatasetList = () => {
             boxShadow="md"
             p="30px"
             mt="50px"
-            ml="60px"
+            ml={{base: '60px', '2xl': "150px"}}
             key={index}
           >
             <Flex mb="20px">

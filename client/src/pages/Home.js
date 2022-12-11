@@ -1,8 +1,14 @@
 import React from 'react';
 import { ColorModeSwitcher } from '../ColorModeSwitcher';
 import Navbar from '../components/Navbar';
-import { Text, Flex, Spacer, Box, Divider } from '@chakra-ui/react';
+import { Text, Flex, Spacer, Box, Divider, extendTheme } from '@chakra-ui/react';
 import { Link, Outlet } from 'react-router-dom';
+
+const breakpoints = {
+  '2xl': '1800px',
+}
+
+const theme = extendTheme({ breakpoints })
 
 function Home() {
   return (
