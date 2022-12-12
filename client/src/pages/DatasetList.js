@@ -41,7 +41,8 @@ const DatasetList = () => {
     initialList.forEach(dataset => {
       if (
         dataset.name.toLowerCase().match(searchInput.toLowerCase()) ||
-        dataset.phases.toLowerCase().match(searchInput.toLowerCase())
+        dataset.phases.toLowerCase().match(searchInput.toLowerCase()) ||
+        dataset.task_type_str.toLowerCase().match(searchInput.toLowerCase())
       ) {
         searchResults.push(dataset);
       }
