@@ -28,6 +28,25 @@ View our project website: https://sites.google.com/view/nadbenchmarks/home?authu
     - [ ] ...
 - [ ] ...
 
+## Setup Guide
+Set up the server
+
+```
+cd server
+Install dependencies: pip3 -r install requirements.txt
+set FLASK_APP=main.py
+set FLASK_ENV=development
+flask run
+```
+
+Set up client side
+
+```
+cd client
+npm install
+npm start
+```
+
 
 ## What we built
 
