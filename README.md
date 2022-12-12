@@ -31,7 +31,7 @@ Set up the server
 
 ```
 cd server
-Install dependencies: pip3 -r install requirements.txt
+Install dependencies: conda env update -n my_env --file requirements.yaml
 set FLASK_APP=main.py
 set FLASK_ENV=development
 flask run
