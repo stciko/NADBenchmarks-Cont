@@ -25,8 +25,6 @@ View our project website: https://sites.google.com/view/nadbenchmarks/home?authu
 - [x] Make the website more responsive
 - [ ] Advanced features
     - [ ] Dataset download (need to organize actual dataset files)
-    - [ ] ...
-- [ ] ...
 
 ## Setup Guide
 Set up the server
