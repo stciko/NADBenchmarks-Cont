@@ -15,7 +15,7 @@ function Home() {
     <Box p="20px">
       {/* <ColorModeSwitcher justifySelf="flex-end" /> */}
       <Flex>
-        <Text fontSize="4xl" as="b"><Link to="/">NAD Benchmark</Link></Text>
+        <Text fontSize="3xl" as="b"><Link to="/">NAD Benchmark</Link></Text>
         <Spacer />
         <Navbar />
       </Flex>

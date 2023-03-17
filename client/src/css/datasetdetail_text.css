@@ -1,0 +1,39 @@
+/* .centered {
+  height: 300px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+} */
+
+.section_header{
+  font: "DM Sans";
+  font-size: 20px;
+  font-weight: bold;
+}
+/* dataset detail green header */
+.dd_g_header{
+  font: "DM Sans";
+  font-size: 18px;
+  font-weight: bold;
+  color: #7AAC35;
+}
+
+/* dataset detail subheader */
+.dd_subheader{
+  font: "DM Sans";
+  font-size: 15px;
+  font-weight: bold;
+}
+
+/* dataset detail text */
+.dd_text{
+  font: "DM Sans";
+  font-size: 15px;
+}
+
+.bullet_list{
+  list-style-type: disc;
+  margin-left: 20px;
+  font: "DM Sans";
+  font-size: 15px;
+}

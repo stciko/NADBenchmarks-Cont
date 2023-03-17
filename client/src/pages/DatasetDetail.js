@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+
+import React, { useState, useEffect } from 'react'; 
 import { useLocation, Link } from 'react-router-dom';
 import {
   Text,
@@ -9,7 +10,12 @@ import {
   useToast,
   SimpleGrid,
   Spacer,
+  Collapse,
+  Accordion, AccordionItem, AccordionButton, AccordionPanel, 
+  AccordionHeader, AccordionIcon
 } from '@chakra-ui/react';
+// import DatasetInfo from '../components/DatasetInfo'
+import DatasetInfo_Accordion from '../components/DatasetInfo'
 import { JsonViewer } from '@textea/json-viewer';
 import axios from 'axios';
 
@@ -21,6 +27,7 @@ const DatasetDetail = () => {
 
   const displayToast = () => {
     toast({
+      // style: { backgroundColor: "#7AAC35", color: "#7AAC35" },
       title: 'Following reference has been copied.',
       description: dataset.reference,
       status: 'success',
@@ -57,8 +64,9 @@ const DatasetDetail = () => {
     window.scrollTo(0, 0);
   }, [dataset]);
 
+
   return (
-    <Box ml={{base: '300px', '2xl': "500px"}} maxW="70%" mt={{base: '20px', '2xl': "30px"}}>
+    <Box ml={{base: '260px', '2xl': "500px"}} maxW="70%" mt={{base: '20px', '2xl': "30px"}}> 
       <Text fontSize="3xl" as="b">
         {dataset.name}
       </Text>
@@ -66,23 +74,36 @@ const DatasetDetail = () => {
         <Image
           src={dataset.image_url}
           alt="temp Image"
-          mt="10px"
+          mt="35px"
           mr="30px"
-          w="300px"
-          h="305px"
+          w="190px"
+          h="140px"
         ></Image>
-        <Box mt="-2px">
+        <Box 
+          ml="20px"
+          mt="10px"
+          w="740px"
+          overflow-wrap
+        >
           {dataset.content}
+          <Text fontSize="l" mt="15px">
+           {dataset.description}
+          </Text>
           <Box
             maxH="500px"
-            maxW="680px"
+            maxW="740px"
             borderWidth="1px"
-            borderRadius="lg"
-            overflow="hidden"
+            borderRadius="30px"
+            overflow-wrap //overflow="hidden"
+            overflow= "scroll"
             boxShadow="md"
-            p="30px"
-            mt="10px"
+            p="20px"
+            mt="20px"
           >
+            <Text fontSize="sm">
+              <b>ML Task Type:</b> {dataset.task_type_str}
+            </Text>
+            <br />
             <Text fontSize="sm">
               <b>Cycle:</b> {dataset.phases}
             </Text>
@@ -109,23 +130,12 @@ const DatasetDetail = () => {
           </Box>
         </Box>
       </Flex>
-      <Flex mt="50px" ml={{base: '50px', '2xl': "80px"}}>
+      <Flex mt="30px" ml={{base: '90px', '2xl': "80px"}}>
         <Button
           bg="#7AAC35"
           color="#FFFFFF"
           variant="solid"
-          w="200px"
-          pl="10px"
-          pr="10px"
-          mr="50px"
-          // onClick={downloadDataset}
-        >
-          Download Dataset
-        </Button>
-        <Button
-          bg="#7AAC35"
-          color="#FFFFFF"
-          variant="solid"
+          borderRadius="30px"
           mb="10px"
           w="200px"
           pl="30px"
@@ -139,6 +149,20 @@ const DatasetDetail = () => {
           bg="#7AAC35"
           color="#FFFFFF"
           variant="solid"
+          borderRadius="30px"
+          w="200px"
+          pl="10px"
+          pr="10px"
+          mr="50px"
+          // onClick={downloadDataset}
+        >
+          Download Dataset
+        </Button>
+        <Button
+          bg="#7AAC35"
+          color="#FFFFFF"
+          variant="solid"
+          borderRadius="30px"
           mb="10px"
           w="200px"
           pl="30px"
@@ -148,14 +172,19 @@ const DatasetDetail = () => {
           Copy Reference
         </Button>
       </Flex>
-      <Box mt="40px" ml={{base: '10vw', '2xl': "8vw"}}>
+
+       <DatasetInfo_Accordion />     
+       <br />   
+
+      {/* <Box mt="40px" ml={{base: '10vw', '2xl': "8vw"}}>
         <JsonViewer value={dataset} />
-      </Box>
+      </Box> */}
+      {/* 
       {similarDatasets.length > 0 && (
         <Text fontSize="2xl" ml={{base: '-200px', '2xl': "-250px"}} mt="20px" as="b">
           Similar Datasets
         </Text>
-      )}
+      )} */}
       <SimpleGrid columns={2} spacing={10} w="80vw" ml={{base: '-200px', '2xl': "-250px"}} mt="-20px">
         {similarDatasets.map((dataset, index) => (
           <Box

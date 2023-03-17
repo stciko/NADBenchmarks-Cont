@@ -64,8 +64,8 @@ const DatasetList = () => {
         ml={{base: '350px', '2xl': "450px"}}
         borderColor="#7AAC35"
         boxShadow="md"
-        borderRadius="lg"
-        borderWidth="2px"
+        borderRadius="3xl"
+        borderWidth="1px"
       />
       <SimpleGrid columns={2} spacing={10}>
         {datasetList.map((dataset, index) => (
