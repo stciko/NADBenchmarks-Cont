@@ -4,7 +4,6 @@ import '../css/datasetdetail_text.css';
 import {
     Text,Box,
     Accordion, AccordionItem, AccordionButton, AccordionPanel, 
-    AccordionHeader, AccordionIcon
 } from '@chakra-ui/react';
 
 const Bullet_List = ({arr}) => {
@@ -42,33 +41,22 @@ const DatasetInfo_Accordion = () => {
           > 
         <Accordion defaultIndex={[0]} allowMultiple>
 
-          {/* Overview */}
+          {/* Data Selection and Preprocessing */}
           <AccordionItem>
             <h2>
               <AccordionButton onClick={toggleAccordion} >
                 {/* <Text fontSize="xl" as="b"> */}
                 <Text className='section_header'>    
-                  Overview
+                  Data Selection and Preprocessing
               </Text>
               </AccordionButton>
             </h2>
-            {/* Overview Content*/}
+            {/* Data selection and preprocessing Content*/}
             <AccordionPanel isOpen={isOpen}>
-              {/* Creator Info */}
-              <Text className='dd_g_header'>
-                Creator Information
-              </Text >
-                <Text className='dd_subheader'>
-                  Authors  
-                </Text>
-                <Text className='dd_text'>
-                  {dataset.authors}
-                </Text>
-                <br />
               {/* Data Selection and Preprocessing */}
-              <Text className='dd_g_header'>
+              {/* <Text className='dd_g_header'>
                 Data Selection and Preprocessing
-              </Text >
+              </Text > */}
                 <Text className='dd_subheader'>
                   Data Source  
                 </Text>
@@ -104,9 +92,9 @@ const DatasetInfo_Accordion = () => {
             {/* Dataset Characteristics Content*/}
             <AccordionPanel isOpen={isOpen}>
               {/* Relevant Information */}
-              <Text className='dd_g_header'>
+              {/* <Text className='dd_g_header'>
                 Relevant Information
-              </Text >
+              </Text > */}
                 <Text className='dd_subheader'>
                   Feature Description  
                 </Text>
@@ -114,7 +102,7 @@ const DatasetInfo_Accordion = () => {
                   {dataset.feature_description}
                 </Text><br />
                 <Text className='dd_subheader'>
-                  Number & Distribution of Labels  
+                  Number and Distribution of Labels  
                 </Text>
                 <Text className='dd_text'>
                   <Bullet_List arr={dataset.labels} />
@@ -202,18 +190,28 @@ const DatasetInfo_Accordion = () => {
           </AccordionItem>
           {/* End of Limitations */}
 
-          {/* Access  */}
+          {/* Creator Information  */}
           <AccordionItem>
             <h2>
               <AccordionButton onClick={toggleAccordion} >
                 {/* <Text fontSize="xl" as="b"> */}
                 <Text className='section_header'>    
-                Access
+                Creator Information and Access
               </Text>
               </AccordionButton>
             </h2>
-            {/* Access Content*/}
+            {/*  Content*/}
             <AccordionPanel isOpen={isOpen}>
+               {/* Creator Info */}
+               <Text className='dd_g_header'>
+                Creator Information
+              </Text >
+                <Text className='dd_subheader'>
+                  Authors  
+                </Text>
+                <Text className='dd_text'>
+                  {dataset.authors}
+                </Text> <br />
               <Text className='dd_g_header'>
                 Availability
               </Text >

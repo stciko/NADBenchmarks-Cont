@@ -66,7 +66,9 @@ const DatasetDetail = () => {
 
 
   return (
-    <Box ml={{base: '260px', '2xl': "500px"}} maxW="70%" mt={{base: '20px', '2xl': "30px"}}> 
+    <Box 
+    mx="auto"
+      maxW="70%" mt={{base: '20px', '2xl': "30px"}}> 
       <Text fontSize="3xl" as="b">
         {dataset.name}
       </Text>
@@ -130,7 +132,9 @@ const DatasetDetail = () => {
           </Box>
         </Box>
       </Flex>
-      <Flex mt="30px" ml={{base: '90px', '2xl': "80px"}}>
+      {/* <Flex mt="30px"> */}
+      <div style={{ display: 'flex', justifyContent: 'center',  flexWrap: "wrap", 
+          marginTop: '30px' }}>
         <Button
           bg="#7AAC35"
           color="#FFFFFF"
@@ -171,7 +175,8 @@ const DatasetDetail = () => {
         >
           Copy Reference
         </Button>
-      </Flex>
+      </div>
+      {/* </Flex> */}
 
        <DatasetInfo_Accordion />     
        <br />   
@@ -189,9 +194,9 @@ const DatasetDetail = () => {
         {similarDatasets.map((dataset, index) => (
           <Box
             borderWidth="1px"
-            borderRadius="lg"
+            borderRadius="sm"
             overflow="hidden"
-            boxShadow="md"
+            boxShadow="none"
             p="30px"
             mt="50px"
             h="420px"
