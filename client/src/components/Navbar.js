@@ -1,6 +1,7 @@
 import React from 'react';
 import { Breadcrumb, BreadcrumbItem, Button } from '@chakra-ui/react';
 import { Link, useLocation } from 'react-router-dom';
+import '../css/general.css'
 
 const Navbar = () => {
   let location = useLocation();

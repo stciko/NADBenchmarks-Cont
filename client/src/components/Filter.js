@@ -137,7 +137,7 @@ const Filter = ({ dataset, onFilter, onClear }) => {
   ];
 
   return (
-    <Box >
+    <Box pr="10px">
       <Box mt="50px" className='filter_box'
         // height="750px"
         height="560px"

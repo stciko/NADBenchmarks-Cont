@@ -1,8 +1,8 @@
 import React from 'react';
-import GeneralForm from '../components/GeneralForm';
+import GeneralForm_Contact from '../components/GeneralForm_Contact';
 
 const Contact = () => {
-  return <GeneralForm />;
+  return <GeneralForm_Contact />;
 };
 
 export default Contact;

@@ -9,6 +9,7 @@ class Config(object):
     MONGODB_SETTINGS = {
         'db': 'NADdatasets',
         'host': os.environ.get('MONGODB_URI')
+        #"host": "mongodb://username:password@remote-server:27017/database",
     }
 
     S3_BUCKET                 = os.environ.get("S3_BUCKET_NAME")

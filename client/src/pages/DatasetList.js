@@ -6,7 +6,7 @@ import {
   Button,
   Flex,
   Spacer,
-  SimpleGrid,
+  SimpleGrid, Divider,
   Input, InputGroup, InputRightElement, IconButton,
 } from '@chakra-ui/react';
 import { SearchIcon } from '@chakra-ui/icons';
@@ -149,45 +149,49 @@ const DatasetList = () => {
       </Flex>
       {/* </InputRightElement> */}
       {/* </InputGroup> */}
+      {/* <br/>
+      <Divider mr="50px" orientation='horizontal' color="#7AAC35" borderColor="#7AAC35" border="1px" /> */}
 
-
-      <SimpleGrid templateColumns="1fr 4fr" columns={2}>
+      <SimpleGrid ml="20px" templateColumns="1fr 4fr" columns={2}>
 
         {/* Filters */}
         <Filter dataset={datasetList} onFilter={handleFilter} onClear={handleSearch} />
 
         {/* Dataset List */}
-        <SimpleGrid columns={2} spacing={10}>
+        <SimpleGrid mt="50px" columns={2} spacing={5}>
           {datasetList.map((dataset, index) => (
             <Box
-              maxW="xl"
+              maxW={"500px"}
+              height={"350px"}
               borderWidth="1px"
               borderRadius="lg"
-              overflow="hidden"
+              overflow="scroll"
               boxShadow="md"
-              p="30px"
-              mt="50px"
-              ml={{ base: '60px', '2xl': "150px" }}
-              mr="20px"
+              pr="30px"
+              pl="30px"
+              pt="25px"
+              // ml={{ base: '60px', '2xl': "150px" }}
+              // mr="20px"
               key={index}
             >
               <Flex mb="20px">
                 <Image
                   src={dataset.image_url}
                   alt="Fallback Image"
-                  w="210px"
-                  h="200px"
+                  w="140px"
+                  h="130px"
                   mr="20px"
                 />
                 <Spacer />
                 <Box>
-                  <Text fontSize="2xl" as="b">
+                  <Text fontSize="xl" as="b">
                     {dataset.name}
                   </Text>
-                  <br />
-                  <Text fontSize="lg" as="b">
-                    Phases: {dataset.phases}
-                  </Text>
+                  <Spacer />
+                
+                  <Text className='dd_text'>
+                  {dataset.data_type} | {dataset.topic} | {dataset.phases}
+                </Text>
                 </Box>
               </Flex>
               <Text fontSize="sm" mb="20px">
