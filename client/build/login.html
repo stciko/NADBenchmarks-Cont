@@ -1,0 +1,39 @@
+<html>
+    <body>
+        <form name="login" action="" method="post" novalidate>
+            <fieldset class="form-group">
+                <legend class="text-center">Login</legend>
+                
+                
+                {{form.hidden_tag()}}
+                <div class="row">
+                    {{form.username.label}}
+
+                    {{form.username}}
+                    {% for error in form.username.errors %}
+                        <span class="error-message">
+                            {{error}}
+                        </span>
+                    {% endfor %}
+                    
+                </div>
+                <div class="row">
+                    {{form.password.label}}
+                    
+                    
+                    {{form.password}}
+                    {% for error in form.password.errors %}
+                        <span class="error-message">
+                            {{error}}
+                        </span>
+                    {% endfor %}
+                    
+                </div>
+                <div class="row">
+                    {{form.submit()}}
+                </div>
+            
+            </fieldset>
+        </form>
+    </body>
+</html>

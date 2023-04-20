@@ -23,7 +23,7 @@ import React, { useState } from 'react';
 import submitImg from '../img/submit.png';
 import axios from 'axios';
 
-const DatasetForm_Submit = () => {
+const DatasetForm = () => {
   const [datasetInput, setDatasetInput] = useState({
     name: '',
     email: '',
@@ -467,4 +467,4 @@ const DatasetForm_Submit = () => {
   );
 };
 
-export default DatasetForm_Submit;
+export default DatasetForm;

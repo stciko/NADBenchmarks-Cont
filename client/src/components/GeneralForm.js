@@ -16,7 +16,7 @@ import React, { useState } from 'react';
 import contactImg from '../img/contact.png';
 import axios from 'axios';
 
-const GeneralForm_Contact = () => {
+const GeneralForm = () => {
   const handleInputChange = e => {
     const { name, value } = e.target;
     setContactInput(prevState => ({
@@ -134,4 +134,4 @@ const GeneralForm_Contact = () => {
   );
 };
 
-export default GeneralForm_Contact;
+export default GeneralForm;
