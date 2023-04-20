@@ -6,14 +6,14 @@ blinker==1.5
 boto3==1.26.13
 botocore==1.29.13
 cachelib==0.9.0
-certifi==2022.6.15
-cffi==1.15.1
-click==8.0.4
-cryptography==37.0.1
-dnspython==2.2.1
+certifi @ file:///private/var/folders/sy/f16zz6x50xz3113nwtb9bvq00000gp/T/abs_83242e7e-f82d-4a71-8ef2-9d71d212d249gu_wxmeq/croots/recipe/certifi_1655968827803/work/certifi
+cffi @ file:///private/var/folders/sy/f16zz6x50xz3113nwtb9bvq00000gp/T/abs_62rp5d8fd4/croots/recipe/cffi_1659598655556/work
+click @ file:///opt/concourse/worker/volumes/live/709f530a-8ffd-4e02-4f5f-9b3cfddd0e0b/volume/click_1646056616410/work
+cryptography @ file:///private/var/folders/sy/f16zz6x50xz3113nwtb9bvq00000gp/T/abs_b470f7cb-c8f1-42c9-b84f-23789ea77e7c9difcqh4/croots/recipe/cryptography_1652101134392/work
+dnspython @ file:///private/var/folders/sy/f16zz6x50xz3113nwtb9bvq00000gp/T/abs_6ecjb_0rcu/croots/recipe/dnspython_1659712640473/work
 email-validator==1.2.1
 feedwerk==1.1.0
-Flask==2.1.3
+Flask @ file:///private/var/folders/sy/f16zz6x50xz3113nwtb9bvq00000gp/T/abs_8am4k38yjk/croots/recipe/flask_1658870771936/work
 Flask-Admin==1.6.0
 Flask-BabelEx==0.9.4
 Flask-Blogging==2.0.0.post2
@@ -29,20 +29,19 @@ Flask-Security==3.0.0
 Flask-WTF==1.0.1
 greenlet==2.0.1
 gunicorn==20.1.0
-idna==3.3
-importlib-metadata==4.11.3
+idna @ file:///tmp/build/80754af9/idna_1637925883363/work
+importlib-metadata @ file:///opt/concourse/worker/volumes/live/9f82d2cd-acb0-490f-6640-deddcdde7174/volume/importlib-metadata_1648562428986/work
 importlib-resources==5.9.0
-itsdangerous==2.0.1
-Jinja2==3.0.3
+itsdangerous @ file:///tmp/build/80754af9/itsdangerous_1621432558163/work
+Jinja2 @ file:///opt/conda/conda-bld/jinja2_1647436528585/work
 jmespath==1.0.1
 jsonschema==4.14.0
 Markdown==3.4.1
-MarkupSafe==2.1.1
+MarkupSafe @ file:///private/var/folders/sy/f16zz6x50xz3113nwtb9bvq00000gp/T/abs_d4a9444f-bd4c-4043-b47d-cede33979b0fve7bm42r/croots/recipe/markupsafe_1654597878200/work
 mongoengine==0.24.2
 passlib==1.7.4
-pip==22.1.2
 pkgutil_resolve_name==1.3.10
-pycparser==2.21
+pycparser @ file:///tmp/build/80754af9/pycparser_1636541352034/work
 pymongo==3.12.0
 pyrsistent==0.18.1
 python-dateutil==2.8.2
@@ -51,7 +50,6 @@ python-slugify==7.0.0
 pytz==2022.2.1
 regex==2022.10.31
 s3transfer==0.6.0
-setuptools==61.2.0
 shortuuid==1.0.11
 six==1.16.0
 speaklater==1.3
@@ -59,7 +57,6 @@ SQLAlchemy==1.4.44
 text-unidecode==1.3
 Unidecode==0.4.21
 urllib3==1.26.12
-Werkzeug==2.0.3
-wheel==0.37.1
+Werkzeug @ file:///opt/conda/conda-bld/werkzeug_1645628268370/work
 WTForms==3.0.1
-zipp==3.8.0
+zipp @ file:///private/var/folders/sy/f16zz6x50xz3113nwtb9bvq00000gp/T/abs_b279673d-f037-44c7-8773-c5a6b6f51037d3wfr9cq/croots/recipe/zipp_1652341773612/work
