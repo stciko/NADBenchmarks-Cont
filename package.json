@@ -8,8 +8,8 @@
         "react-scripts": "3.4.1"
     },
     "scripts": {
-        "start": "gunicorn server.app:app",
-        "build": "cd client && npm run build"
+        "start": "react-scripts --openssl-legacy-provider start",
+        "build": "react-scripts --openssl-legacy-provider build"
     },
     "engines": {
         "node": "19.x"
