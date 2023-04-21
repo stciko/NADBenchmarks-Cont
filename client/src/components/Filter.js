@@ -121,7 +121,7 @@ const Filter = ({ dataset, onFilter, onClear }) => {
     {
       header: "ML Task",
       values: ["Binary Classification", "Image Classification", "Image Segmentation",
-        "Multiclass (Ordinal) Classification", "Multiclass Classification", "Multiclass Multilabel Classification",
+        "Multiclass Classification", "Multiclass Multilabel Classification",
         "Multiclass Segmentation", "Multilabel Classification", "Multitask Learning", "Semantic Segmentation",
         "Video Prediction", "Visual Question Answering"],
       filter_arr: selectedTask,
@@ -177,6 +177,7 @@ const Filter = ({ dataset, onFilter, onClear }) => {
                         onChange={section.fn} size="sm">
                         <Text className='filter_text'>
                           {val}
+                    
                         </Text>
                       </Checkbox>
                       <br />

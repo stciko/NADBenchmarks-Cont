@@ -25,48 +25,70 @@ import axios from 'axios';
 
 const DatasetForm_Submit = () => {
   const [datasetInput, setDatasetInput] = useState({
-    name: '',
-    email: '',
-    paperTitle: '',
-    resourceLink: '',
-    datasetName: '',
-    datasetSource: '',
-    benchmarkTask: '',
-    mlTaskType: [],
+    dataset_name: '',
+    paper_title: '',
+    data_type: '',
     topic: '',
+    phases: '',
     description: '',
-    phase: '',
-    timespan: '',
-    coverage: '',
-    datasetType: '',
-    publishYear: '',
+    task_type: [],
+    data_source: '',
     size: '',
-    citation: '',
-    additionalComments: '',
-    datasetFile: '',
+    timespan: '',
+    geo_coverage: '',
+    published: '',
+    image_url: '',
+    paper_url: '',
+    // dataset_url: '',
+    reference: '',
+    annotation_methods: '',
+    missing_values: '',
+    feature_description: '',
+    labels: [],
+    base_models: [],
+    data_split: [],
+    metrics: [],
+    // results: '',
+    limitations: '',
+    authors: '',
+    availability: '',
+    license: '',
+    other_resources_descr: '',
+    other_resources_url: ''
   });
   const datasetError =
     JSON.stringify(datasetInput) ===
     JSON.stringify({
-      name: '',
-      email: '',
-      paperTitle: '',
-      resourceLink: '',
-      datasetName: '',
-      datasetSource: '',
-      benchmarkTask: '',
-      mlTaskType: '',
+      dataset_name: '',
+      paper_title: '',
+      data_type: '',
       topic: '',
+      phases: '',
       description: '',
-      phase: '',
-      timespan: '',
-      coverage: '',
-      datasetType: '',
-      publishYear: '',
+      task_type: [],
+      data_source: '',
       size: '',
-      citation: '',
-      additionalComments: '',
-      datasetFile: '',
+      timespan: '',
+      geo_coverage: '',
+      published: '',
+      image_url: '',
+      paper_url: '',
+      // dataset_url: '',
+      reference: '',
+      annotation_methods: '',
+      missing_values: '',
+      feature_description: '',
+      labels: [],
+      base_models: [],
+      data_split: [],
+      metrics: [],
+      // results: '',
+      limitations: '',
+      authors: '',
+      availability: '',
+      license: '',
+      other_resources_descr: '',
+      other_resources_url: ''
     });
   const [currPage, setCurrPage] = useState(0);
   const [file, setFile] = useState();
@@ -80,10 +102,17 @@ const DatasetForm_Submit = () => {
     }));
   };
 
-  const handleChoiceForm = value => {
+  const handleDataType = value => {
     setDatasetInput(prevState => ({
       ...prevState,
-      datasetType: value,
+      data_type: value,
+    }));
+  };
+
+  const handleTaskType = value => {
+    setDatasetInput(prevState => ({
+      ...prevState,
+      task_type: value,
     }));
   };
 
@@ -143,25 +172,36 @@ const DatasetForm_Submit = () => {
         });
 
         setDatasetInput({
-          name: '',
-          email: '',
-          paperTitle: '',
-          resourceLink: '',
-          datasetName: '',
-          datasetSource: '',
-          benchmarkTask: '',
-          mlTaskType: [],
+          dataset_name: '',
+          paper_title: '',
+          data_type: '',
           topic: '',
+          phases: '',
           description: '',
-          phase: '',
-          timespan: '',
-          coverage: '',
-          datasetType: '',
-          publishYear: '',
+          task_type: [],
+          data_source: '',
           size: '',
-          citation: '',
-          additionalComments: '',
-          datasetFile: '',
+          timespan: '',
+          geo_coverage: '',
+          published: '',
+          image_url: '',
+          paper_url: '',
+          // dataset_url: '',
+          reference: '',
+          annotation_methods: '',
+          missing_values: '',
+          feature_description: '',
+          labels: [],
+          base_models: [],
+          data_split: [],
+          metrics: [],
+          // results: '',
+          limitations: '',
+          authors: '',
+          availability: '',
+          license: '',
+          other_resources_descr: '',
+          other_resources_url: ''
         });
       }
     } catch (error) {
@@ -175,134 +215,97 @@ const DatasetForm_Submit = () => {
       });
     }
   };
-
   return (
-    <Box w="90%" mt={{base: '50px', '2xl': "100px"}} ml={{base: '100px', '2xl': "250px"}}>
+    <Box w="90%" mt={{ base: '50px', '2xl': "100px" }} ml={{ base: '100px', '2xl': "250px" }}>
       <Flex mt="30px" w="90%">
         <Image
           src={submitImg}
           ml="50px"
-          boxSize="500px"
+          boxSize="400px"
           mb="300px"
           mt="90px"
-          mr={{base: '150px', '2xl': "250px"}}
+          mr={{ base: '150px', '2xl': "250px" }}
         />
 
         <Box mt="-20px">
           {currPage === 0 && (
             <Box w="500px">
               <FormControl isRequired mb="20px">
-                <FormLabel>Name</FormLabel>
-                <Input
-                  type="text"
-                  value={datasetInput?.name}
-                  onChange={handleForm}
-                  name="name"
-                />
-              </FormControl>
-              <FormControl isRequired mb="20px">
-                <FormLabel>Email</FormLabel>
-                <Input
-                  type="email"
-                  value={datasetInput?.email}
-                  onChange={handleForm}
-                  name="email"
-                />
-              </FormControl>
-              <FormControl isRequired mb="20px">
-                <FormLabel>Resource (Paper) Title</FormLabel>
-                <Input
-                  type="text"
-                  value={datasetInput?.paperTitle}
-                  onChange={handleForm}
-                  name="paperTitle"
-                />
-              </FormControl>
-              <FormControl isRequired mb="20px">
-                <FormLabel>Link to the resource above</FormLabel>
-                <Input
-                  type="text"
-                  value={datasetInput?.resourceLink}
-                  onChange={handleForm}
-                  name="resourceLink"
-                />
-              </FormControl>
-              <FormControl isRequired mb="20px">
                 <FormLabel>Dataset Name</FormLabel>
                 <Input
                   type="text"
-                  value={datasetInput?.datasetName}
+                  value={datasetInput?.dataset_name}
                   onChange={handleForm}
-                  name="datasetName"
+                  name="dataset_name"
                 />
               </FormControl>
               <FormControl isRequired mb="20px">
-                <FormLabel>Dataset Source</FormLabel>
+                <FormLabel>Paper Title</FormLabel>
                 <Input
                   type="text"
-                  value={datasetInput?.datasetSource}
+                  value={datasetInput?.paper_title}
                   onChange={handleForm}
-                  name="datasetSource"
+                  name="paper_title"
                 />
               </FormControl>
               <FormControl isRequired mb="20px">
-                <FormLabel>Task the benchmark is made for</FormLabel>
+                <FormLabel>Paper Link </FormLabel>
                 <Input
                   type="text"
-                  value={datasetInput?.benchmarkTask}
+                  value={datasetInput?.paper_url}
                   onChange={handleForm}
-                  name="benchmarkTask"
+                  name="paper_url"
                 />
               </FormControl>
               <FormControl isRequired mb="20px">
-                <FormLabel>ML task type</FormLabel>
-                <CheckboxGroup
-                  onChange={handleChoiceForm}
-                  name="mlTaskType"
-                  colorScheme="green"
+                <FormLabel>Type of Dataset</FormLabel>
+                <RadioGroup
+                  onChange={handleDataType}
+                  value={datasetInput?.data_type}
                 >
-                  <SimpleGrid columns={2} spacing={5}>
-                    <Checkbox value="Binary Classification">
-                      Binary Classification
-                    </Checkbox>
-                    <Checkbox value="Image Segmentation">
-                      Image Segmentation
-                    </Checkbox>
-                    <Checkbox value="Multiclass Segmentation">
-                      Multiclass Segmentation
-                    </Checkbox>
-                    <Checkbox value="Multiclass (ordinal) Segmentation">
-                      Multiclass (ordinal) Segmentation
-                    </Checkbox>
-                    <Checkbox value="Semantic Segmentation">
-                      Semantic Segmentation
-                    </Checkbox>
-                    <Checkbox value="Video Prediction">
-                      Video Prediction
-                    </Checkbox>
-                    <Checkbox value="Other">Other</Checkbox>
-                  </SimpleGrid>
-                </CheckboxGroup>
+                  <Stack direction="row">
+                    <Radio value="Image">Image</Radio>
+                    <Radio value="Multimodal">Multimodal</Radio>
+                    <Radio value="Numerical">Numerical</Radio>
+                    <Radio value="Text">Text</Radio>
+                    <Radio value="Vector Data">Vector Data</Radio>
+                    <Radio value="Video">Video</Radio>
+                  </Stack>
+                </RadioGroup>
               </FormControl>
-            </Box>
-          )}
-
-          {currPage === 1 && (
-            <Box>
               <FormControl isRequired mb="20px">
                 <FormLabel>Topic of Natural Disaster</FormLabel>
                 <Select
                   placeholder="Select option"
                   onChange={handleForm}
+                  value={datasetInput?.topic}
                   name="topic"
                 >
+                  <option value="Atmospheric Rivers">Atmospheric Rivers</option>
                   <option value="Drought">Drought</option>
                   <option value="Extreme Weather">Extreme Weather</option>
                   <option value="Flood">Flood</option>
                   <option value="General">General</option>
                   <option value="Hurricane">Hurricane</option>
-                  <option value="Volcano">Volcano</option>
+                  <option value="Tornado">Tornado</option>
+                  <option value="Tropical Cyclone">Tropical Cyclone</option>
+                  <option value="Volcanic Eruption">Volcanic Eruption</option>
                   <option value="Wildfire">Wildfire</option>
+                  <option value="Other">Other</option>
+                </Select>
+              </FormControl>
+              <FormControl isRequired mb="20px">
+                <FormLabel>Phase in Disaster Cycle</FormLabel>
+                <Select
+                  placeholder="Select option"
+                  onChange={handleForm}
+                  value={datasetInput?.phases}
+                  name="phases"
+                >
+                  <option value="Preparedness"> Preparedness</option>
+                  <option value="Prevention"> Prevention</option>
+                  <option value="Recovery"> Recovery</option>
+                  <option value="Response"> Response  </option>
                   <option value="Other">Other</option>
                 </Select>
               </FormControl>
@@ -318,69 +321,58 @@ const DatasetForm_Submit = () => {
                 />
               </FormControl>
               <FormControl isRequired mb="20px">
-                <FormLabel>Phase in Disaster Cycle</FormLabel>
-                <Select
-                  placeholder="Select option"
-                  onChange={handleForm}
-                  name="phase"
+                <FormLabel>ML Task Type</FormLabel>
+                <CheckboxGroup
+                  onChange={handleTaskType}
+                  value={datasetInput?.task_type}
+                  // name="task_type"
+                  colorScheme="green"
                 >
-                  <option value="Drought">Preparedness - Early Warning</option>
-                  <option value="Preparedness - Monitoring and Detection">
-                    Preparedness - Monitoring and Detection
-                  </option>
-                  <option value="Forecasting and Predicting">
-                    Forecasting and Predicting
-                  </option>
-                  <option value="Recovery">Recovery</option>
-                  <option value="Response - Damage assessment">
-                    Response - Damage assessment
-                  </option>
-                  <option value="Response - Post-disaster Coordination and Response">
-                    Response - Post-disaster Coordination and Response
-                  </option>
-                  <option value="Other">Other</option>
-                </Select>
-              </FormControl>
-              <FormControl mb="20px">
-                <FormLabel>Timespan</FormLabel>
-                <Input
-                  type="text"
-                  value={datasetInput?.timespan}
-                  onChange={handleForm}
-                  name="timespan"
-                />
-              </FormControl>
-              <FormControl isRequired mb="20px">
-                <FormLabel>Geological Coverage</FormLabel>
-                <Input
-                  type="text"
-                  value={datasetInput?.coverage}
-                  onChange={handleForm}
-                  name="coverage"
-                />
-              </FormControl>
-              <FormControl isRequired mb="20px">
-                <FormLabel>Type of Dataset</FormLabel>
-                <RadioGroup
-                  onChange={handleChoiceForm}
-                  value={datasetInput?.datasetType}
-                >
-                  <Stack direction="row">
-                    <Radio value="Image">Image</Radio>
-                    <Radio value="Numerical">Numerical</Radio>
-                    <Radio value="Text">Text</Radio>
-                    <Radio value="Video">Video</Radio>
-                    <Radio value="Other">Other</Radio>
-                  </Stack>
-                </RadioGroup>
+                  <SimpleGrid columns={2} spacing={5}>
+                    <Checkbox value="Binary Classification">
+                      Binary Classification
+                    </Checkbox>
+                    <Checkbox value="Image Classification">
+                      Image Classification
+                    </Checkbox>
+                    <Checkbox value="Image Segmentation">
+                      Image Segmentation
+                    </Checkbox>
+                    <Checkbox value="Multiclass Classification">
+                      Multiclass Classification
+                    </Checkbox>
+                    <Checkbox value="Multiclass Multilabel Classification">
+                      Multiclass Multilabel Classification
+                    </Checkbox>
+                    <Checkbox value="Multiclass Segmentation">
+                      Multiclass Segmentation
+                    </Checkbox>
+                    <Checkbox value=" Multilabel Classification">
+                      Multilabel Classification
+                    </Checkbox>
+                    <Checkbox value=" Multitask Learning">
+                      Multitask Learning
+                    </Checkbox>
+                    <Checkbox value="Semantic Segmentation">
+                      Semantic Segmentation
+                    </Checkbox>
+                    <Checkbox value="Video Prediction">
+                      Video Prediction
+                    </Checkbox>
+                    <Checkbox value="Visual Question Answering">
+                      Visual Question Answering
+                    </Checkbox>
+                    <Checkbox value="Other">Other</Checkbox>
+                  </SimpleGrid>
+                </CheckboxGroup>
               </FormControl>
               <FormControl isRequired mb="20px">
-                <FormLabel>Publish Year</FormLabel>
+                <FormLabel>Dataset Source</FormLabel>
                 <Input
                   type="text"
-                  value={datasetInput?.publishYear}
+                  value={datasetInput?.data_source}
                   onChange={handleForm}
-                  name="publishYear"
+                  name="data_source"
                 />
               </FormControl>
               <FormControl isRequired mb="20px">
@@ -393,15 +385,181 @@ const DatasetForm_Submit = () => {
                 />
               </FormControl>
               <FormControl isRequired mb="20px">
-                <FormLabel>Citation</FormLabel>
+                <FormLabel>Timespan</FormLabel>
                 <Input
                   type="text"
-                  value={datasetInput?.citation}
+                  value={datasetInput?.timespan}
                   onChange={handleForm}
-                  name="citation"
+                  name="timespan"
                 />
               </FormControl>
               <FormControl isRequired mb="20px">
+                <FormLabel>Geological Coverage</FormLabel>
+                <Input
+                  type="text"
+                  value={datasetInput?.geo_coverage}
+                  onChange={handleForm}
+                  name="geo_coverage"
+                />
+              </FormControl>
+              <FormControl isRequired mb="20px">
+                <FormLabel>Year Published </FormLabel>
+                <Input
+                  type="text"
+                  value={datasetInput?.published}
+                  onChange={handleForm}
+                  name="published"
+                />
+              </FormControl>
+            </Box>
+          )}
+
+          {currPage === 1 && (
+            <Box>
+              <FormControl isRequired mb="20px">
+                <FormLabel>Paper Citation</FormLabel>
+                <Input
+                  type="text"
+                  value={datasetInput?.reference}
+                  onChange={handleForm}
+                  name="reference"
+                />
+              </FormControl>
+              <FormControl isRequired mb="20px">
+                <FormLabel>Annotation Methods</FormLabel>
+                <Input
+                  type="text"
+                  value={datasetInput?.annotation_methods}
+                  onChange={handleForm}
+                  name="annotation_methods"
+                />
+              </FormControl>
+
+
+              <FormControl isRequired mb="20px">
+                <FormLabel>Missing Values</FormLabel>
+                <Input
+                  type="text"
+                  value={datasetInput?.missing_values}
+                  onChange={handleForm}
+                  name="missing_values"
+                />
+              </FormControl>
+              <FormControl isRequired mb="20px">
+                <FormLabel>Feature Description</FormLabel>
+                <Input
+                  type="text"
+                  value={datasetInput?.feature_description}
+                  onChange={handleForm}
+                  name="feature_description"
+                />
+              </FormControl>
+              <FormControl isRequired mb="20px">
+                <FormLabel>Labels</FormLabel>
+                <Input
+                  type="text"
+                  value={datasetInput?.labels}
+                  onChange={handleForm}
+                  name="labels"
+                />
+              </FormControl>
+              <FormControl isRequired mb="20px">
+                <FormLabel>Base Models</FormLabel>
+                <Input
+                  type="text"
+                  value={datasetInput?.base_models}
+                  onChange={handleForm}
+                  name="base_models"
+                />
+              </FormControl>
+              <FormControl isRequired mb="20px">
+                <FormLabel>Data Split</FormLabel>
+                <Input
+                  type="text"
+                  value={datasetInput?.data_split}
+                  onChange={handleForm}
+                  name="data_split"
+                />
+              </FormControl>
+              <FormControl isRequired mb="20px">
+                <FormLabel>Metrics</FormLabel>
+                <Input
+                  type="text"
+                  value={datasetInput?.metrics}
+                  onChange={handleForm}
+                  name="metrics"
+                />
+              </FormControl>
+              <FormControl mb="20px">
+                <FormLabel>Results</FormLabel>
+                <Input
+                  type="text"
+                  value={datasetInput?.results}
+                  onChange={handleForm}
+                  name="results"
+                />
+              </FormControl>
+
+              <FormControl isRequired mb="20px">
+                <FormLabel>Limitations</FormLabel>
+                <Input
+                  type="text"
+                  value={datasetInput?.limitations}
+                  onChange={handleForm}
+                  name="limitations"
+                />
+              </FormControl>
+              <FormControl isRequired mb="20px">
+                <FormLabel>Authors</FormLabel>
+                <Input
+                  type="text"
+                  value={datasetInput?.authors}
+                  onChange={handleForm}
+                  name="authors"
+                />
+              </FormControl>
+              <FormControl isRequired mb="20px">
+                <FormLabel>Availability</FormLabel>
+                <Input
+                  type="text"
+                  value={datasetInput?.availability}
+                  onChange={handleForm}
+                  name="availability"
+                />
+              </FormControl>
+
+              <FormControl isRequired mb="20px">
+                <FormLabel>License</FormLabel>
+                <Input
+                  type="text"
+                  value={datasetInput?.license}
+                  onChange={handleForm}
+                  name="license"
+                />
+              </FormControl>
+              <FormControl isRequired mb="20px">
+                <FormLabel>Other Resources - Description</FormLabel>
+                <Textarea
+                  type="text"
+                  value={datasetInput?.other_resources}
+                  onChange={handleForm}
+                  w="500px"
+                  h="100px"
+                  name="other_resources"
+                />
+              </FormControl>
+
+              <FormControl isRequired mb="20px">
+                <FormLabel>Link to the resource above</FormLabel>
+                <Input
+                  type="text"
+                  value={datasetInput?.resourceLink}
+                  onChange={handleForm}
+                  name="resourceLink"
+                />
+              </FormControl>
+
+              <FormControl mb="20px">
                 <FormLabel>Additional Comments</FormLabel>
                 <Textarea
                   type="text"
@@ -464,7 +622,9 @@ const DatasetForm_Submit = () => {
         </Box>
       </Flex>
     </Box>
+
   );
+
 };
 
 export default DatasetForm_Submit;
