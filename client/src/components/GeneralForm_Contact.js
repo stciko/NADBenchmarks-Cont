@@ -67,18 +67,18 @@ const GeneralForm_Contact = () => {
   };
 
   return (
-    <Box w="90%" mt={{base: '50px', '2xl': "100px"}} ml={{base: '100px', '2xl': "250px"}}>
-      <Flex mt="30px" w="90%">
+    <Box w="90%" mt={{base: '50px', '2xl': "100px"}} ml={{base: '100px', '2xl': "650px"}}>
+      <Flex mt="30px" w="70%">
         <Image
           src={contactImg}
           ml="40px"
-          w="600px"
+          w="500px"
           mb="300px"
           mt="10px"
           mr={{base: '150px', '2xl': "250px"}}
         />
 
-        <Box mt="-20px">
+        <Box mt="-20px"  mr="30px">
           <FormControl isRequired mb="20px">
             <FormLabel>Name</FormLabel>
             <Input

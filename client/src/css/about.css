@@ -1,0 +1,19 @@
+.about_header {
+    font: "DM Sans";
+    font-size: 18px;
+    font-weight: bold;
+    color: #7AAC35;
+  }
+  
+  /* dataset detail subheader */
+  .about_subheader {
+    font: "DM Sans";
+    font-size: 15px;
+    font-weight: bold;
+  }
+  
+  /* dataset detail text */
+  .about_text {
+    font: "DM Sans";
+    font-size: 15px;
+  }
