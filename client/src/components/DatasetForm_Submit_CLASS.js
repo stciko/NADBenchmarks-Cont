@@ -130,7 +130,7 @@ const DatasetForm_Submit = () => {
 
     try {
       const res = await axios.post(
-        'https://nadbenchmarks.herokuapp.com/submit/dataset',
+        'https://natdisaster-datasets.ai/submit/dataset',
         datasetInput
       );
       if (res.data['success']) {

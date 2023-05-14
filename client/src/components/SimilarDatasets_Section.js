@@ -28,7 +28,7 @@ const SimilarDatasets_Section = () => {
     try {
       // const res = await axios.get(`https://nadbenchmarks.herokuapp.com/${dataset.slug}`);
       // setSimilarDatasets(res.data.by_task_type);
-      const res = await axios.get('https://nadbenchmarks.herokuapp.com/datasetList');
+      const res = await axios.get('https://natdisaster-datasets.ai/datasetList');
       setSimilarDatasets(res.data);
     } catch (error) {
       console.log(error);

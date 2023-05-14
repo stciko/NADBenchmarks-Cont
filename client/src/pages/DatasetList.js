@@ -23,7 +23,9 @@ const DatasetList = () => {
 
   const getData = async () => {
     try {
-      const res = await axios.get('https://nadbenchmarks.herokuapp.com/datasetList');
+      // const baseURL = process.env.REACT_APP_API_URL || 'https://nadbenchmarks.herokuapp.com';
+      // const res = await axios.get(`${baseURL}/datasetList`);
+      const res = await axios.get('https://natdisaster-datasets.ai/datasetList');
       setDatasetList(res.data);
       initialList = res.data;
     } catch (error) {

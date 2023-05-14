@@ -36,7 +36,7 @@ const GeneralForm_Contact = () => {
   const submitContact = async () => {
     try {
       const res = await axios.post(
-        'https://nadbenchmarks.herokuapp.com/submit/contact',
+        'https://natdisaster-datasets.ai/submit/contact',
         contactInput
       );
       if (res.data['success']) {

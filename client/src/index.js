@@ -9,6 +9,11 @@ import DatasetList from './pages/DatasetList';
 import DatasetForm_Submit from './components/DatasetForm_Submit';
 import Contact from './pages/Contact';
 
+// import app form application
+// import CORS from flask_corsx
+// const cors = require('cors');
+// app.use(cors()); 
+
 const router = createBrowserRouter([
   {
     path: '/',

@@ -43,6 +43,7 @@ s3 = boto3.client(
 
 print(app.config)
 mail = Mail(app)
+# CORS(app, resources={r"/*": {"origins": "http://localhost:3000"}})
 cors=CORS(app)
 
 ### Dataset Model
